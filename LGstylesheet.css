@@ -1,0 +1,52 @@
+.row {
+  display: inline-block;
+  background-color: white;
+  width: 65em;
+  height: 10em;
+}
+
+.cell {
+  display: inline-block;
+  width: 10em;
+  height: 10em;
+  line-height: 10em;
+}
+
+.question {
+    background-color: white;
+    color: blue;
+    vertical-align: middle; 
+    font-size: 16px;
+}
+
+.answerOption {
+    background-color: grey;
+    color: black;
+    vertical-align: middle; 
+    font-size: 16px;
+    font-style: bold;
+}
+
+.hidden {
+    display: none;
+}
+
+.correctAnswer {
+    background-color: green;
+    border: .3em solid;
+}
+
+.wrongAnswer {
+    border-color: red;
+    border: .3em solid;
+}
+
+.gameWrapper{
+    width: 100%;
+    text-align: center;
+}
+
+.headTitle {
+    text-align: center;
+    width: 100%;
+}
