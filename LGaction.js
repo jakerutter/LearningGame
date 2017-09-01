@@ -1,4 +1,8 @@
 
+//TO DO -- add a radio button selection for type of game being played (Math, Words, etc)
+        //
+
+
 //This function is the outermost function.
 
     function PlayMathGame(){
@@ -37,6 +41,7 @@
             return () => PlayMathGame();
         });
     };
+
 
 //Functions
 function createProblemObj(num1, num2, sign, problem, correctAnswer){
@@ -282,5 +287,3 @@ function resetStyles(){
    
 
 
-//If ths is unchecked but the user has CreateAndModify permission they will
-//still be able to edit their profile.

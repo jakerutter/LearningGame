@@ -3,13 +3,9 @@
 
 
 
-    body{
-        background-color: mediumaquamarine;
+body{
+    background-color: mediumaquamarine;
     }
-
-
-
-
 
 .row {
   display: inline-block;
@@ -67,8 +63,11 @@
 }
 
 .gameWrapper{
-    width: 100%;
-    text-align: center;
+    width: 65em;
+    margin: auto;
+    /* align-self: auto;
+    text-align: center; */
+    background-color: white;
 }
 
 .headTitle {
