@@ -1,8 +1,28 @@
+
+
+
+
+
+    body{
+        background-color: mediumaquamarine;
+    }
+
+
+
+
+
 .row {
   display: inline-block;
   background-color: white;
   width: 65em;
   height: 10em;
+}
+
+.miniRow {
+  display: inline-block;
+  background-color: white;
+  width: 65em;
+  height: 2em;
 }
 
 .cell {
@@ -20,10 +40,15 @@
 }
 
 .answerOption {
-    background-color: grey;
+    background-color: mediumaquamarine;
     color: black;
     vertical-align: middle; 
     font-size: 16px;
+    font-style: bold;
+}
+
+.answerOption:hover {
+    background-color: lightslategray;
     font-style: bold;
 }
 
@@ -33,12 +58,12 @@
 
 .correctAnswer {
     background-color: green;
-    border: .3em solid;
+    
 }
 
 .wrongAnswer {
-    border-color: red;
-    border: .3em solid;
+    background-color: red;
+  
 }
 
 .gameWrapper{

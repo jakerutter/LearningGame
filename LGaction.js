@@ -1,189 +1,286 @@
 
+//This function is the outermost function.
 
-
-$(document).ready(function(){
-    $("#middleMiddle").click(function(){
+    function PlayMathGame(){
+       if (labelResults.innerHTML != ""){
+            resetStyles();
+       }
+        problemObj = new createMathProblem (0,0,"","",0);
         
-        createMathProblem();
-    })
-})
+        createMathProblem(problemObj);
+        populateMathProblem(problemObj);
+        populateAnswers(problemObj);
 
 
-
-
+        $("#Top").on('click', function () {
+            removeBinding();
+            compareSelection(problemObj, this);
+            // Closure
+            return () => PlayMathGame();
+        });
+        $("#Left").on('click', function () {
+            removeBinding();
+            compareSelection(problemObj, this);
+            // Closure
+            return () => PlayMathGame();
+        });
+        $("#Right").on('click', function () {
+            removeBinding();
+            compareSelection(problemObj, this);
+            // Closure
+            return () => PlayMathGame();
+        });
+        $("#Bottom").on('click', function () {
+            removeBinding();
+            compareSelection(problemObj, this);
+            // Closure
+            return () => PlayMathGame();
+        });
+    };
 
 //Functions
-function createMathProblem() {
-    var num1 = Math.floor(Math.random()*5);
-    var num2 = Math.floor(Math.random()*5);
+function createProblemObj(num1, num2, sign, problem, correctAnswer){
+    this.num1 = num1;
+    this.num2 = num2;
+    this.sign = sign;
+    this.problem = problem;
+    this.correctAnswer = correctAnswer;
+}
+
+
+function createMathProblem(problemObj) {
+   if(problemObj.problem = ""){
+    var num1 = Math.floor(Math.random()*10);
+    var num2 = Math.floor(Math.random()*10);
     var additionOrSubstraction = Math.random();
     var sign;
-    var signage;
+    var correctAnswer;
 
         if (additionOrSubstraction < .5){
             sign = "-";
-            signage = "minus";
-        }
-        else {
-            sign = "+";
-            signage = "plus";
-        }
-        
-        if (signage = "minus") {
-            var num1 = Math.max(num1,num2);
-            var num2 = Math.min(num1,num2);
-            if(num1 == num2){
+             num1 = Math.max(num1,num2);
+             num2 = Math.min(num1,num2);
+            if(num1 === num2){
                 num1 += Math.floor(Math.random()*3);
             }
         }
-        var problem = (num1.toString()+ sign + num2.toString());
+        if (additionOrSubstraction >= .5){
+            sign = "+";
+        }
         
-        populateMathProblem(problem);
-        populateAnswers(num1,sign,num2);
+        var problem = (num1.toString()+ sign + num2.toString());
+        problemObj.num1 = num1;
+        problemObj.num2 = num2;
+        problemObj.sign = sign;
+        problemObj.problem = problem;
+    } else {
+         num1 = Math.floor(Math.random()*10);
+         num2 = Math.floor(Math.random()*10);
+         additionOrSubstraction = Math.random();
+         sign = "";
+         correctAnswer;
+    
+            if (additionOrSubstraction < .5){
+                sign = "-";
+                 num1 = Math.max(num1,num2);
+                 num2 = Math.min(num1,num2);
+                if(num1 === num2){
+                    num1 += Math.floor(Math.random()*3);
+                }
+            }
+            if (additionOrSubstraction >= .5){
+                sign = "+";
+            }
+            
+                problem = (num1.toString()+ sign + num2.toString());
+            problemObj.num1 = num1;
+            problemObj.num2 = num2;
+            problemObj.sign = sign;
+            problemObj.problem = problem;
+    }
+        //Populate the correct answer value
+        if (problemObj.sign == "+"){
+            correctAnswer = Number(problemObj.num1+problemObj.num2);
+    }
+    else{
+        if (problemObj.num1 > problemObj.num2){ 
+            correctAnswer = Number(problemObj.num1-problemObj.num2);
+        }
+        else {
+            correctAnswer = Number(problemObj.num2-problemObj.num1);
+        }
+    }
+
+    problemObj.correctAnswer = correctAnswer;
+
+    return problemObj;
 }
 
 
 //Function that will take the generated math problem and place it
-//into the questionArea span
-function populateMathProblem(problem){
-    var span = document.getElementById("middleMiddle");
+//into the questionArea button.
+function populateMathProblem(problemObj){
+    var span = document.getElementById("questionArea");
     if(span.firstChild) {
         span.removeChild(span.firstChild);
 
-        span.appendChild(document.createTextNode(problem.toString()) );
+        span.appendChild(document.createTextNode(problemObj.problem.toString()) );
             }
     else {
-        span.appendChild(document.createTextNode(problem.toString()));
+        span.appendChild(document.createTextNode(problemObj.problem.toString()));
     }
 }
 
-function populateAnswers(num1,sign,num2){
+//Function that will for correct answers and false answers and
+//place them into the answerOption areas.
+function populateAnswers(problemObj){
     var myAnswersArray = [];
-    if (sign == "+"){
-        var answer1 = Number(num1+num2);
-    }
-    else{
-        if (num1 > num2){ 
-            var answer1 = Number(num1-num2);
-        }
-        else {
-            var answer1 = Number(num2-num1);
-        }
-    }
-    var answer2 = answer1 + 1;
-    var answer3 = answer1 + 2;
-    var answer4 = answer1 + 3;
-    var answer5 = answer1 + 4;
+    var correctAnswer = problemObj.correctAnswer;
+    var answer2 = correctAnswer + 1;
+    var answer3 = correctAnswer + 2;
+    var answer4 = correctAnswer + 3;
+    var answer5 = correctAnswer + 4;
 
     myAnswersArray = [answer2, answer3, answer4, answer5];
 
-    if (answer1 >= 1){
-        var answer6 = answer1 - 1;
+    if (correctAnswer >= 1){
+        var answer6 = correctAnswer - 1;
         myAnswersArray.push(answer6);
     }
-    if (answer1 >= 2){
-        var answer7 = answer1 - 2;
+    if (correctAnswer >= 2){
+        var answer7 = correctAnswer - 2;
         myAnswersArray.push(answer7);
     }
-    if (answer1 >= 3){
-        var answer8 = answer1 - 3;
+    if (correctAnswer >= 3){
+        var answer8 = correctAnswer - 3;
         myAnswersArray.push(answer8);
     }
-    if (answer1 >= 4){
-        var answer9 = answer1 - 4;
+    if (correctAnswer >= 4){
+        var answer9 = correctAnswer - 4;
         myAnswersArray.push(answer9);
     }
     
-    var mySpanArray = [];
+    var mySpanArray = ["Top", "Left", "Right", "Bottom"];
 
-    var span1 = document.getElementById("middleTop");
-    var span2 = document.getElementById("leftMiddle");
-    var span3 = document.getElementById("rightMiddle");
-    var span4 = document.getElementById("middleBottom");
-    
     //Select one of the 4 locations to hold the correct answer.
-    mySpanArray = [span1, span2, span3, span4];
-    var correctAnswerLocation = mySpanArray[Math.floor(Math.random()* mySpanArray.length)];
-    if(correctAnswerLocation.firstChild) {
-        correctAnswerLocation.removeChild(correctAnswerLocation.firstChild);
+    var correctAnswerLocation = (document.getElementById(mySpanArray[Math.floor(Math.random()* mySpanArray.length)])).id;
 
-        correctAnswerLocation.appendChild(document.createTextNode(answer1.toString()) );
-            }
-    else {
-        correctAnswerLocation.appendChild(document.createTextNode(answer1.toString()));
-    }
+    replaceValuesInButton(correctAnswerLocation, correctAnswer);
+   
+    var placeIndex = mySpanArray.indexOf(correctAnswerLocation);
+  
+        mySpanArray.splice(placeIndex, 1);
+  
 
-    var spanIndex1 = mySpanArray.indexOf(correctAnswerLocation);
-    if (spanIndex1 > -1) {
-        mySpanArray.splice(spanIndex1, 1);
-    }
+    // Here are the random options that will get plugged into the remaining answer locations. 
+        var placementObj = [
+            {"id": ""},
+            {"id": ""}];
 
-    //Here are the random options that will get plugged into the remaining answer locations.
-    var spanIndex2 = mySpanArray[Math.floor(Math.random()* mySpanArray.length)];
-    var rand1 = myAnswersArray[Math.floor(Math.random() * (myAnswersArray.length-1))];
+            
+    placementObj.placesForNumbers = mySpanArray;
+    placementObj.possibleAnswers = myAnswersArray;
+    
+    numberPlacement(placementObj);
+        }    
 
-    if(spanIndex2.firstChild) {
-        spanIndex2.removeChild(spanIndex2.firstChild);
+function numberPlacement(placementObj) {
+    var mySpanArray = placementObj.placesForNumbers;
+    var myAnswersArray = placementObj.possibleAnswers;
+    var counter = 3;
+    while (counter > 0) {
+        var place = (document.getElementById(mySpanArray[Math.floor(Math.random()* mySpanArray.length)])).id;
+        var value = myAnswersArray[Math.floor(Math.random() * myAnswersArray.length)];
 
-        spanIndex2.appendChild(document.createTextNode(rand1.toString()) );
-            }
-    else {
-        spanIndex2.appendChild(document.createTextNode(rand1.toString()));
-    }
-
-    if (spanIndex2 > -1) {
-        mySpanArray.splice(spanIndex2, 1);
-    }
+        replaceValuesInButton(place, value)
+    
+        var placeIndex = mySpanArray.indexOf(place);
+        
+            mySpanArray.splice(placeIndex, 1);
+        
         //This part removes the random index that was selected from the array so
         //there are not duplicate answers.
-        var index1 = myAnswersArray.indexOf(rand1);
-        if (index1 > -1) {
-            myAnswersArray.splice(index1, 1);
-        }
-     
-    var spanIndex3 = mySpanArray[Math.floor(Math.random()* mySpanArray.length)];
-    var rand2 = myAnswersArray[Math.floor(Math.random() * myAnswersArray.length)];
+        var index = myAnswersArray.indexOf(value);
+        
+            myAnswersArray.splice(index, 1);
 
-    if(spanIndex3.firstChild) {
-        spanIndex3.removeChild(spanIndex3.firstChild);
-
-        spanIndex3.appendChild(document.createTextNode(rand2.toString()) );
-            }
-    else {
-        spanIndex3.appendChild(document.createTextNode(rand2.toString()));
+        counter -= 1;
+        placementObj.placesForNumbers = mySpanArray;
+        placementObj.possibleAnswers = myAnswersArray;
     }
-
-    if (spanIndex3 > -1) {
-        mySpanArray.splice(spanIndex3, 1);
-    }
-     //This part removes the random index that was selected from the array so
-        //there are not duplicate answers.
-        var index2 = myAnswersArray.indexOf(rand2);
-        if (index2 > -1) {
-            myAnswersArray.splice(index2, 1);
-        }
-
-    var spanIndex4 = mySpanArray[Math.floor(Math.random()* mySpanArray.length)];
-    var rand3 = myAnswersArray[Math.floor(Math.random() * myAnswersArray.length)];
-
-    if(spanIndex4.firstChild) {
-        spanIndex4.removeChild(spanIndex4.firstChild);
-
-        spanIndex4.appendChild(document.createTextNode(rand3.toString()) );
-            }
-    else {
-        span3.appendChild(document.createTextNode(rand3.toString()));
-    }
-
-     //This part removes the random index that was selected from the array so
-        //there are not duplicate answers.
-        var index3 = myAnswersArray.indexOf(rand3);
-        if (index3 > -1) {
-            myAnswersArray.splice(index3, 1);
-        }
-    
-        if (spanIndex4 > -1) {
-        mySpanArray.splice(spanIndex4, 1);
-    }
-
+    return placementObj;    
 }
+
+function replaceValuesInButton(place,value){
+    var thisPlace = document.getElementById(place);
+     if(thisPlace.firstChild) {
+
+        thisPlace.removeChild(thisPlace.firstChild);
+
+        thisPlace.appendChild(document.createTextNode(value.toString()));
+            }
+    else {
+        thisPlace.appendChild(document.createTextNode(value.toString()));
+    }
+}
+
+function compareSelection(problemObj, selection){
+    var selectedAnswer = selection.innerHTML;
+    var correctCount = parseInt($('#correctCounter').text());
+    if (selectedAnswer == problemObj.correctAnswer){
+        document.getElementById("labelResults").innerHTML = "You are correct!";
+        correctCount += 1;
+        document.getElementById("correctCounter").innerHTML = correctCount.toString();
+        document.getElementById("correctCounterLabel").innerHTML = ("Current streak is: " + correctCount);
+        document.getElementById(selection.id).classList.add('correctAnswer');
+        
+    }
+    else {
+        document.getElementById("labelResults").innerHTML = "Please try again.";
+        correctCount = 0;
+        document.getElementById("correctCounter").innerHTML = correctCount.toString();
+        document.getElementById("correctCounterLabel").innerHTML = ("Current streak is: " + correctCount);
+        document.getElementById(selection.id).classList.add('wrongAnswer');
+    }
+    
+}
+
+function removeBinding(){
+    $("#Top").off('click');
+    $("#Left").off('click');
+    $("#Right").off('click');
+    $("#Bottom").off('click');
+}
+
+function resetStyles(){
+    if((document.getElementById('Top')).classList.contains('correctAnswer')) {
+        document.getElementById('Top').classList.remove('correctAnswer');
+    }
+    if(document.getElementById('Top').classList.contains('wrongAnswer')) {
+        document.getElementById('Top').classList.remove('wrongAnswer');
+    }
+    if(document.getElementById('Left').classList.contains('correctAnswer')) {
+        document.getElementById('Left').classList.remove('correctAnswer');
+    }
+    if(document.getElementById('Left').classList.contains('wrongAnswer')) {
+        document.getElementById('Left').classList.remove('wrongAnswer');
+    }
+    if(document.getElementById('Right').classList.contains('correctAnswer')) {
+        document.getElementById('Right').classList.remove('correctAnswer');
+    }
+    if(document.getElementById('Right').classList.contains('wrongAnswer')) {
+        document.getElementById('Right').classList.remove('wrongAnswer');
+    }
+    if(document.getElementById('Bottom').classList.contains('correctAnswer')) {
+        document.getElementById('Bottom').classList.remove('correctAnswer');
+    }
+    if(document.getElementById('Bottom').classList.contains('wrongAnswer')) {
+        document.getElementById('Bottom').classList.remove('wrongAnswer');
+    }
+
+    };
+   
+
+
+//If ths is unchecked but the user has CreateAndModify permission they will
+//still be able to edit their profile.

@@ -11,26 +11,26 @@
 <h1 class= "headTitle">Reagan's Learning Game</h1>
 
     <div class="gameWrapper">
+        <div id="labelResults" class="miniRow"></div>
+            <div id="correctCounterLabel" class="miniRow"></div>
+      
         <div class="row">
-            <div id="leftTop" class="cell hidden"><span id="spanOne" class="hidden"></span></div>
-            <div id="middleTop" class="cell answerOption"><span id="spanTwo" class="answerOption"></span></div>
-            <div id="rightTop" class="cell hidden"><span id="spanThree" class="hidden"></span></div>
+            <div id="leftTop" class="cell hidden"></div>
+            <button id="Top" class="cell answerOption" ></button>
+            <div id="rightTop" class="cell hidden"></div>
         </div>
         <div class="row">
-            <div id="leftMiddle" class="cell answerOption"><span id="spanFour" class="answerOption"></span></div>
-            <div id="middleMiddle" class="cell question" onclick="createMathProblem()"><span id="questionArea" class="question">Click Here to Start</span></div>
-            <div id="rightMiddle" class="cell answerOption"><span id="spanSix" class="answerOption"></span></div>
+            <button id="Left" class="cell answerOption" ></button>
+            <button id="questionArea" class="cell question" onclick="PlayMathGame()">Click Here to Start</button>
+            <button id="Right" class="cell answerOption" ></button>
         </div>
         <div class="row">   
-            <div id="leftBottom" class="cell hidden"><span id="spanSeven" class="hidden"></span></div>
-            <div id="middleBottom" class="cell answerOption"><span id="spanEight" class="answerOption"></span></div>
-            <div id="rightBottom" class="cell hidden"><span id="spanNine" class="hidden"></span></div>   
+            <div id="leftBottom" class="cell hidden"></div>
+            <button id="Bottom" class="cell answerOption" ></button>
+            <div id="rightBottom" class="cell hidden"></div>   
         </div>
         
-
-
-
-
+        <div id="correctCounter" class="hidden">0</div>
 
     </div>
 
