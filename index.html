@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="LGstylesheet.css">
+<script src="jquery-3.1.1.js"></script>
+<script type ="text/javascript" src="LGaction.js"></script>
+<title>Learning Game</title>
+</head>
+<body style= "text-align: center";>
+    
+<h1 class= "headTitle">Reagan's Learning Game</h1>
+
+    <div class="gameWrapper">
+        <div id="labelResults" class="miniRow"></div>
+            <div id="correctCounterLabel" class="miniRow"></div>
+      
+        <div class="row">
+            <div id="leftTop" class="cell hidden"></div>
+            <button id="Top" class="cell answerOption" ></button>
+            <div id="rightTop" class="cell hidden"></div>
+        </div>
+        <div class="row">
+            <button id="Left" class="cell answerOption" ></button>
+            <button id="questionArea" class="cell question" onclick="PlayMathGame()">Click Here to Start</button>
+            <button id="Right" class="cell answerOption" ></button>
+        </div>
+        <div class="row">   
+            <div id="leftBottom" class="cell hidden"></div>
+            <button id="Bottom" class="cell answerOption" ></button>
+            <div id="rightBottom" class="cell hidden"></div>   
+        </div>
+        
+        <div id="correctCounter" class="hidden">0</div>
+
+    </div>
+
+</body>
+</html>
+
