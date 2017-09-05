@@ -1,14 +1,42 @@
 
-//TO DO -- add a radio button selection for type of game being played (Math, Words, etc)
-        //
 
+
+//firebase functions
+    // function newHighScore(currentScore) {
+    // // var currentScore = document.getElementById('correctCounter').value;
+    //     // database.ref(currentScore).set('highScore');
+    //     document.getElementById('highScoreDiv').innerHTML = currentScore
+    //     firebase.database().ref('highScore/'.set({
+    //           score: currentScore
+    //         }));
+    //      }
+  
 
 //This function is the outermost function.
 
     function PlayMathGame(){
+        var returnBool;
+
        if (labelResults.innerHTML != ""){
-            resetStyles();
+           var didBoolReturn = resetStyles(returnBool);
+            
        }
+       if (labelResults.innerHTML == "" || didBoolReturn){
+
+       //get a look at firebase db to get highScore value
+    //    var highscoreRef = database.ref('highScore');
+    //    highscoreRef.on('value', function(snapshot) {
+    //      var childData = snapshot.val();
+    //      alert (childData);
+    //   });
+        if (document.getElementById('correctCounter') > 0){
+            var currentScore = document.getElementById('correctCounter').value;
+            // newHighScore(currentScore);
+        }
+        
+      
+     
+      
         problemObj = new createMathProblem (0,0,"","",0);
         
         createMathProblem(problemObj);
@@ -40,7 +68,9 @@
             // Closure
             return () => PlayMathGame();
         });
-    };
+    
+}else{ return;
+}};
 
 
 //Functions
@@ -54,60 +84,88 @@ function createProblemObj(num1, num2, sign, problem, correctAnswer){
 
 
 function createMathProblem(problemObj) {
+    var radioValue = $("input[name='problemSize']:checked").val();
+    var radioType = $("input[name='problemType']:checked").val();
    if(problemObj.problem = ""){
-    var num1 = Math.floor(Math.random()*10);
-    var num2 = Math.floor(Math.random()*10);
-    var additionOrSubstraction = Math.random();
+    var num1 = Math.floor(Math.random()*radioValue);
+    var num2 = Math.floor(Math.random()*radioValue);
     var sign;
     var correctAnswer;
-
-        if (additionOrSubstraction < .5){
+    if (radioType == "addsub" || radioType == "add" || radioType == "sub"){
+        var signForOperation = Math.random();
+        if (signForOperation < .5 || radioType == "sub"){
             sign = "-";
              num1 = Math.max(num1,num2);
              num2 = Math.min(num1,num2);
-            if(num1 === num2){
-                num1 += Math.floor(Math.random()*3);
-            }
         }
-        if (additionOrSubstraction >= .5){
+        if (signForOperation >= .5 || radioType == "add"){
             sign = "+";
         }
-        
+    }
+    if (radioType == "multdiv" || radioType == "div" || radioType == "mult"){
+        var signForOperation = Math.random();
+        if (signForOperation < .5 || radioType == "div"){
+            sign = "%";
+            num1 = Math.max(num1,num2);
+            num2 = Math.min(num1,num2);
+            var extra = num1 % num2;
+            var moreNeeded = num2 - extra;
+            num1 += moreNeeded;
+        }
+        if (signForOperation >= .5 || radioType == "mult"){
+            sign = "*";
+        }
+    }
+         
         var problem = (num1.toString()+ sign + num2.toString());
         problemObj.num1 = num1;
         problemObj.num2 = num2;
         problemObj.sign = sign;
         problemObj.problem = problem;
+
     } else {
-         num1 = Math.floor(Math.random()*10);
-         num2 = Math.floor(Math.random()*10);
-         additionOrSubstraction = Math.random();
+
+         num1 = Math.floor(Math.random()*radioValue);
+         num2 = Math.floor(Math.random()*radioValue);
          sign = "";
          correctAnswer;
-    
-            if (additionOrSubstraction < .5){
+         if (radioType == "addsub" || radioType == "add" || radioType == "sub"){
+            signForOperation = Math.random();
+            if (signForOperation < .5 || radioType == "sub"){
                 sign = "-";
                  num1 = Math.max(num1,num2);
                  num2 = Math.min(num1,num2);
-                if(num1 === num2){
-                    num1 += Math.floor(Math.random()*3);
-                }
             }
-            if (additionOrSubstraction >= .5){
+            if (signForOperation >= .5 || radioType == "add"){
                 sign = "+";
             }
-            
-                problem = (num1.toString()+ sign + num2.toString());
+        }
+        if (radioType == "multdiv" || radioType == "div" || radioType == "mult"){
+            signForOperation = Math.random();
+            if (signForOperation < .5 || radioType == "div"){
+                sign = "%";
+                num1 = Math.max(num1,num2);
+                num2 = Math.min(num1,num2);
+                extra = num1 % num2;
+                moreNeeded = num2 - extra;
+                num1 += moreNeeded;
+            }
+            if (signForOperation >= .5 || radioType == "mult"){
+                sign = "*";
+            }
+        }
+             
+            problem = (num1.toString()+ sign + num2.toString());
             problemObj.num1 = num1;
             problemObj.num2 = num2;
             problemObj.sign = sign;
             problemObj.problem = problem;
     }
-        //Populate the correct answer value
-        if (problemObj.sign == "+"){
-            correctAnswer = Number(problemObj.num1+problemObj.num2);
+    //Populate the correct answer value
+    if (problemObj.sign == "+"){
+        correctAnswer = Number(problemObj.num1+problemObj.num2);
     }
-    else{
+    if (problemObj.sign == "-"){
         if (problemObj.num1 > problemObj.num2){ 
             correctAnswer = Number(problemObj.num1-problemObj.num2);
         }
@@ -115,7 +173,12 @@ function createMathProblem(problemObj) {
             correctAnswer = Number(problemObj.num2-problemObj.num1);
         }
     }
-
+    if (problemObj.sign == "*"){
+        correctAnswer = Number(problemObj.num1 * problemObj.num2);
+    }
+    if (problemObj.sign == "%"){
+        correctAnswer = Number(problemObj.num1 / problemObj.num2);
+    }
     problemObj.correctAnswer = correctAnswer;
 
     return problemObj;
@@ -232,12 +295,18 @@ function replaceValuesInButton(place,value){
 function compareSelection(problemObj, selection){
     var selectedAnswer = selection.innerHTML;
     var correctCount = parseInt($('#correctCounter').text());
+    var questionsAnswered = parseInt($('#questionsAnswered').text());
+    var percentCorrect = parseInt($('#percentCorrect').text());
+    var globalCorrect = parseInt($('#globalCorrect').text());
+
     if (selectedAnswer == problemObj.correctAnswer){
         document.getElementById("labelResults").innerHTML = "You are correct!";
         correctCount += 1;
         document.getElementById("correctCounter").innerHTML = correctCount.toString();
         document.getElementById("correctCounterLabel").innerHTML = ("Current streak is: " + correctCount);
         document.getElementById(selection.id).classList.add('correctAnswer');
+        globalCorrect += 1;
+        document.getElementById('globalCorrect').innerHTML = globalCorrect;
         
     }
     else {
@@ -247,6 +316,13 @@ function compareSelection(problemObj, selection){
         document.getElementById("correctCounterLabel").innerHTML = ("Current streak is: " + correctCount);
         document.getElementById(selection.id).classList.add('wrongAnswer');
     }
+
+    questionsAnswered += 1;
+    document.getElementById('questionsAnswered').innerHTML = questionsAnswered.toString();
+    percentCorrect = (globalCorrect/questionsAnswered)*100;
+    document.getElementById('globalCorrect').innerHTML = globalCorrect.toString();
+    document.getElementById('percentCorrect').innerHTML = percentCorrect.toFixed(2) + "%";
+    document.getElementById('totalCorrect').innerHTML = globalCorrect.toString();
     
 }
 
@@ -257,32 +333,41 @@ function removeBinding(){
     $("#Bottom").off('click');
 }
 
-function resetStyles(){
+function resetStyles(returnBool){
+    returnBool = false;
     if((document.getElementById('Top')).classList.contains('correctAnswer')) {
         document.getElementById('Top').classList.remove('correctAnswer');
+        returnBool = true;
     }
     if(document.getElementById('Top').classList.contains('wrongAnswer')) {
         document.getElementById('Top').classList.remove('wrongAnswer');
+        returnBool = true;
     }
     if(document.getElementById('Left').classList.contains('correctAnswer')) {
         document.getElementById('Left').classList.remove('correctAnswer');
+        returnBool = true;
     }
     if(document.getElementById('Left').classList.contains('wrongAnswer')) {
         document.getElementById('Left').classList.remove('wrongAnswer');
+        returnBool = true;
     }
     if(document.getElementById('Right').classList.contains('correctAnswer')) {
         document.getElementById('Right').classList.remove('correctAnswer');
+        returnBool = true;
     }
     if(document.getElementById('Right').classList.contains('wrongAnswer')) {
         document.getElementById('Right').classList.remove('wrongAnswer');
+        returnBool = true;
     }
     if(document.getElementById('Bottom').classList.contains('correctAnswer')) {
         document.getElementById('Bottom').classList.remove('correctAnswer');
+        returnBool = true;
     }
     if(document.getElementById('Bottom').classList.contains('wrongAnswer')) {
         document.getElementById('Bottom').classList.remove('wrongAnswer');
+        returnBool = true;
     }
-
+    return returnBool;
     };
    
 

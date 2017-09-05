@@ -2,38 +2,96 @@
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="LGstylesheet.css">
-<script src="jquery-3.1.1.js"></script>
-<script type ="text/javascript" src="LGaction.js"></script>
 <title>Learning Game</title>
 </head>
-<body style= "text-align: center";>
+<body>
     
 <h1 class= "headTitle">Reagan's Learning Game</h1>
-
+<div id="leftLane" class="lane">
+    <div class="statWrapper">
+        <h2 class="statTitle">Game Settings</h2>
+        <div class="statPlaceholder">How large do you want the numbers?
+            <form action="" class="radioButton">
+                <input type="radio" name="problemSize" value="10" checked="checked" > 10 and Smaller<br>
+                <input type="radio" name="problemSize" value="20" > 20 and Smaller<br>
+                <input type="radio" name="problemSize" value="100" > 100 and Smaller
+              </form>
+        </div>
+        <div class="statPlaceholder">What type of math problems?
+            <form action="" class="radioButton">
+                <input type="radio" name="problemType" value="addsub" checked="checked"> Addition and Subtraction<br>
+                <input type="radio" name="problemType" value="add"> Addition<br>
+                <input type="radio" name="problemType" value="sub"> Subtraction<br>
+                <input type="radio" name="problemType" value="multdiv"> Multiplication and Division<br>
+                <input type="radio" name="problemType" value="mult"> Multiplication<br>
+                <input type="radio" name="problemType" value="div"> Division
+              </form>
+        </div>
+    </div>
+</div>
+<div id="middleLane" class="lane">
     <div class="gameWrapper">
         <div id="labelResults" class="miniRow"></div>
             <div id="correctCounterLabel" class="miniRow"></div>
-      
+       
         <div class="row">
-            <div id="leftTop" class="cell hidden"></div>
+            <div id="leftTop" class="cell"></div>
             <button id="Top" class="cell answerOption" ></button>
-            <div id="rightTop" class="cell hidden"></div>
+            <div id="rightTop" class="cell"></div>
         </div>
         <div class="row">
             <button id="Left" class="cell answerOption" ></button>
-            <button id="questionArea" class="cell question" onclick="PlayMathGame()">Click Here to Start</button>
+            <div class="cell question"><button id="questionArea"  class="questionButton" onclick="PlayMathGame()">Click Here to Start</button></div>
             <button id="Right" class="cell answerOption" ></button>
         </div>
         <div class="row">   
-            <div id="leftBottom" class="cell hidden"></div>
+            <div id="leftBottom" class="cell"></div>
             <button id="Bottom" class="cell answerOption" ></button>
-            <div id="rightBottom" class="cell hidden"></div>   
+            <div id="rightBottom" class="cell"></div>   
         </div>
         
         <div id="correctCounter" class="hidden">0</div>
+        <div id="questionsAnswered" class="hidden">0</div>
+        <div id="globalCorrect" class="hidden">0</div>
 
     </div>
+</div>
 
+<div id="rightLane" class="lane">
+    <div class="statWrapper">
+        <h2 class="statTitle">Game Stats</h2>
+        <div class="statPlaceholder">All Time High Score:</div>
+        <div id="allTimeHighScore" class="statPlaceholder"></div><br>
+        <div class="statPlaceholder">Total Correct this Round:</div>
+        <div id="totalCorrect" class="statPlaceholder"></div><br>
+        <div class="statPlaceholder">Percent Correct this Round:</div>
+        <div id="percentCorrect" class="statPlaceholder"></div>
+        
+    </div>
+</div>
 </body>
+
+
+<script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+<!-- <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script> -->
+<!-- <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-auth.js"></script> -->
+<script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
+<!-- <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-messaging.js"></script> -->
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCbiE0KWjPhP-GfeVEEwLeE1B5kbZiI6q4",
+    authDomain: "learning-game-344c7.firebaseapp.com",
+    databaseURL: "https://learning-game-344c7.firebaseio.com",
+    projectId: "learning-game-344c7",
+    storageBucket: "learning-game-344c7.appspot.com",
+    messagingSenderId: "924113702049"
+  };
+  firebase.initializeApp(config);
+  var database = firebase.database();
+</script>
+<script src="jquery-3.1.1.js"></script>
+<script type ="text/javascript" src="LGaction.js"></script>
+
 </html>
 

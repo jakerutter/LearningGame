@@ -1,23 +1,42 @@
 
-
-
-
-
 body{
     background-color: mediumaquamarine;
+    text-align: center;
     }
+
+.lane {
+    display: inline-block;
+    vertical-align: top;
+    background-color: white;
+    height: 30em;
+}
+
+.statWrapper{
+    width: 15em;
+    margin: auto;
+    padding-top: 2em;
+}
+
+.gameWrapper{
+    width: 55em;
+    margin: auto;
+    /* align-self: auto;
+    text-align: center; */
+    background-color: white;
+    padding-bottom: 4em;
+}
 
 .row {
   display: inline-block;
   background-color: white;
-  width: 65em;
+  width: 55em;
   height: 10em;
 }
 
 .miniRow {
   display: inline-block;
   background-color: white;
-  width: 65em;
+  width: 55em;
   height: 2em;
 }
 
@@ -25,21 +44,29 @@ body{
   display: inline-block;
   width: 10em;
   height: 10em;
+  text-align: center;
+  vertical-align: middle;
   line-height: 10em;
 }
 
 .question {
     background-color: white;
     color: blue;
-    vertical-align: middle; 
-    font-size: 16px;
+    /* vertical-align: middle;  */
+    font-size: 1em;
+}
+
+.questionButton{
+    height: 10em;
+    width: 10em;
+    font-size: 1em;
 }
 
 .answerOption {
     background-color: mediumaquamarine;
     color: black;
-    vertical-align: middle; 
-    font-size: 16px;
+    /* vertical-align: middle;  */
+    font-size: 1em;
     font-style: bold;
 }
 
@@ -62,15 +89,19 @@ body{
   
 }
 
-.gameWrapper{
-    width: 65em;
-    margin: auto;
-    /* align-self: auto;
-    text-align: center; */
-    background-color: white;
-}
-
 .headTitle {
     text-align: center;
     width: 100%;
+}
+
+.statTitle {
+    text-align: center;
+}
+
+.statPlaceholder {
+    padding-top: 1em;
+}
+
+.radioButton {
+    text-align: left;
 }
