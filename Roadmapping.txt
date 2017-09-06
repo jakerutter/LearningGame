@@ -1,0 +1,40 @@
+Thoughts on LearningGame
+
+	Features [not currently odered by priority]
+		
+		
+		-Attach application to DB so that I can read and write to external file for better stat tracking.
+			One option is firebase DB.
+			
+		-Add sounds. Background music. One sound for a wrong answer, another for a correct answer, and another for an achievement or milestone reached.
+			Requires research into how to hook sounds into my application.
+			
+		-Improve overall appearance.
+			More pleasing colors. A range of colors. Or colors that change based on streak length.
+			
+		-Add experience & levels. Using FireBase Db record the user experience earned and the total number of correct questions. Create levels,
+			achievements, and % of correct answers overall.
+			
+		
+			
+		
+			
+			
+	Completed Functionality Added:
+	
+		-Add a check that ensures the current question gets answered before another one is generated.
+			In order to do this I can add a boolean to problemObj that is called isAnswered that is set to true when answered. Will check this before
+			firing the functions that generate and display a new problem.
+			*Currently this does not prevent the first question from being skipped. All subsequent questions are protected.
+			
+		-Add html that allows for space on either side of the gameplay to display stats, level, experience and other things.
+			This will require adding another div outside of game wrapper with the class 'lane' that will provide adequate space for 3 vertical areas.
+		
+		-Add a user-control that allows the changing of types of math problems provided. Addition, subtraction, multiplication, division.
+		
+		-Add a html area that displays the highest streak ever reached.
+		
+		-Add a user-control that allows the raising and lowering of the size of numbers used when generating math problems.
+			This would require reworking the current hard coded answer-options that exist. Because +-4 of a large number is probably not sufficient
+			for answer variance when larger numbers are considered.
+			*Have not yet changed the way that incorrect answer-options are generated.
