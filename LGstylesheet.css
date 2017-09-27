@@ -111,7 +111,7 @@ body{
 }
 
 #currentGoal {
-    font-size: 1em;
+    font-size: 1.5em;
     margin-top: -.25em;
 }
 
@@ -145,4 +145,20 @@ body{
 
 #simplemodal-container {
     opacity: 1;
+}
+
+.doingGood {
+    color: green; 
+}
+
+.doingPoor {
+    color: red;
+}
+
+#percentCorrect {
+    font-size: 1.5em;
+}
+
+#totalCorrect {
+    font-size: 1.5em;
 }

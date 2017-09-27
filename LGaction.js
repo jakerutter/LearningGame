@@ -335,6 +335,8 @@ function compareSelection(problemObj, selection){
     document.getElementById('percentCorrect').innerHTML = percentCorrect.toFixed(2) + "%";
     document.getElementById('totalCorrect').innerHTML = globalCorrect.toString();
     
+    changeStyling(percentCorrect);
+
     if (globalCorrect >= currentGoal){
         goalMet(globalCorrect, currentGoal, percentCorrect);
         }
@@ -466,5 +468,20 @@ function goalMet(globalCorrect, currentGoal, percentCorrect){
         }
     else {
         alert("Error. Have Mom or Dad check your stats.")
+    }
+}
+
+function changeStyling(percentCorrect) {
+    if (percentCorrect >= 85){
+        if (document.getElementById('percentCorrect').classList.contains('doingPoor')) {
+            document.getElementById('percentCorrect').classList.remove('doingPoor');
+        }
+            document.getElementById('percentCorrect').classList.add('doingGood');
+    }
+    if (percentCorrect < 85){
+        if (document.getElementById('percentCorrect').classList.contains('doingGood')) {
+            document.getElementById('percentCorrect').classList.remove('doingGood');
+        }
+            document.getElementById('percentCorrect').classList.add('doingPoor');
     }
 }
