@@ -2,6 +2,9 @@
 
 //This function is the outermost function.
 function PlayMathGame(){
+    if (currentGoal.innerHTML == ""){
+        preGame();
+    }
         var returnBool;
 
        if (labelResults.innerHTML != ""){
@@ -304,6 +307,7 @@ function compareSelection(problemObj, selection){
     var questionsAnswered = parseInt($('#questionsAnswered').text());
     var percentCorrect = parseInt($('#percentCorrect').text());
     var globalCorrect = parseInt($('#globalCorrect').text());
+    var currentGoal = parseInt($('#currentGoal').text());
 
     if (selectedAnswer == problemObj.correctAnswer){
         document.getElementById("labelResults").innerHTML = "You are correct!";
@@ -313,6 +317,7 @@ function compareSelection(problemObj, selection){
         document.getElementById(selection.id).classList.add('correctAnswer');
         globalCorrect += 1;
         document.getElementById('globalCorrect').innerHTML = globalCorrect;
+        
         
     }
     else {
@@ -330,6 +335,9 @@ function compareSelection(problemObj, selection){
     document.getElementById('percentCorrect').innerHTML = percentCorrect.toFixed(2) + "%";
     document.getElementById('totalCorrect').innerHTML = globalCorrect.toString();
     
+    if (globalCorrect >= currentGoal){
+        goalMet(globalCorrect, currentGoal, percentCorrect);
+        }
     }
 
 function removeBinding(){
@@ -418,91 +426,45 @@ function getFactors(num){
         return factorArray[Math.floor(Math.random() * factorArray.length)];
     }
 
-    //     var radioValue = $("input[name='problemSize']:checked").val();
-//     var radioType = $("input[name='problemType']:checked").val();
-//     var signForOperation = Math.random();
-//    if(problemObj.problem = ""){
-//     problemObj.num1 = getRandomInt(0, radioValue);
-//     problemObj.num2 = getRandomInt(0, radioValue);
-//     problemObj.sign = "";
-//     problemObj.correctAnswer = "";
-//         switch(radioType){
-//         case "addsub":
-//             if (signForOperation >= .5){
-//                 add(problemObj)
-//                 break;
-//             } else {
-//                 subtract(problemObj);
-//                 break;
-//             }
-//         case "add":
-//             add(problemObj);
-//             break;
-        
-//         case "sub":
-//             subtract(problemObj);
-//             break;
-        
-//         case "multdiv":
-//             if (signForOperation >= .5){
-//                 multiply(problemObj)
-//                 break;
-//             } else {
-//                 divide(problemObj);
-//                 break;
-//             }
-//         case "mult":
-//             multiply(problemObj);
-//             break;
-        
-//         case "div":
-//             divide(problemObj);
-//             break;    
-//         }
-//         //Testing out assigning straight to problemObj.problem without the variable
-//         // var problem = (num1.toString()+ sign + num2.toString());
-//         // problemObj.problem = problem;
-//         problemObj.problem = (num1.toString()+ sign + num2.toString());
-//         return problemObj;
 
-//     } else {
-//          problemObj.num1 = getRandomInt(0, radioValue);
-//          problemObj.num2 = getRandomInt(0, radioValue);
-//          problemObj.sign = "";
-//          problemObj.correctAnswer = "";
-//         switch(radioType){
-//             case "addsub":
-//                 if (signForOperation >= .5){
-//                     add(problemObj);
-//                     break;
-//                 }else{
-//                     subtract(problemObj);
-//                     break;
-//                 }
-//             case "add":
-//                 add(problemObj);
-//                 break;
-            
-//             case "subtract":
-//                 subtract(problemObj);
-//                 break;
+function preGame() {
+    document.getElementById('welcomeModal').classList.remove('hidden');
+    $("#welcomeModal").modal();
 
-//             case "multdiv":
-//                 if (signForOperation >= .5){
-//                     multiply(problemObj);
-//                     break;
-//                 }else{
-//                     divide(problemObj);
-//                     break;
-//                 }
-//             case "mult":
-//                 multiply(problemObj);
-//                 break;
-//             case "divide":
-//                 divide(problemObj);
-//                 break;
-//             }
-//             problemObj.problem = (problemObj.num1.toString() + problemObj.sign + problemObj.num2.toString());
-//             return problemObj;
-//         }
-//     }
+    
+    var goal;
+    loop();
+
+    function loop(){
+        if ($("input[name='goalValue']:checked").length > 0) {
+            goal = $("input[name='goalValue']:checked").val();
+        }
+        else{
+            setTimeout(loop, 1000);   
+        }
+      currentGoal.innerHTML = goal;
+    }
+}
+
+function hideWelcomeModal(name) {
+    if (currentGoal.innerHTML != ""){
+    document.getElementById('welcomeModal').classList.add('hidden');
+    document.getElementById('welcomeModal').classList.add('behind');
+    document.getElementById('simplemodal-overlay').classList.add('behind');
+    document.getElementById('simplemodal-container').classList.add('behind');
+    
+
+    }
+}
+
+function goalMet(globalCorrect, currentGoal, percentCorrect){
+    if ((globalCorrect >= currentGoal) && (percentCorrect >= 85)) {
+        alert("Great work Reagan! Show this message to Mom or Dad and you are finished!")
+        }
+    else if ((globalCorrect >= currentGoal) && (percentCorrect < 85)) {
+        alert("Please refresh and try again. You missed too many problems.")
+        }
+    else {
+        alert("Error. Have Mom or Dad check your stats.")
+    }
+}

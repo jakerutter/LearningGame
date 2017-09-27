@@ -15,10 +15,17 @@ Thoughts on LearningGame
 		-Add experience & levels. Using FireBase Db record the user experience earned and the total number of correct questions. Create levels,
 			achievements, and % of correct answers overall.
 			
+		-Update the application to use bootstrap for responsiveness on all device types.
 		
-			
+		-Incorporate styling [background color, font color/style, div borders and shape] based on either the current player streak or the % of correct
+			answers provided for any given session. Would do this by adding javascript that takes the div's value and displays a specific styling class
+			according to that value. The styling class should include all of the desired css changes within it.
 		
-			
+		-Add a beaker or bar-chart type of image. This image will be a goal tracker as set by the player. At onset of session the player will set their
+			goal and the beaker will track the progress of that goal. Example: 50 correct questions.
+
+		-Add fontAwesome icons for improved styling, interaction, and visual stimulation.
+			A thumbs up when correct, a thumbs down when wrong.
 			
 	Completed Functionality Added:
 	

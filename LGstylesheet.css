@@ -1,6 +1,6 @@
 
 body{
-    background-color: mediumaquamarine;
+    background-color: #66CDA9;
     text-align: center;
     }
 
@@ -12,9 +12,9 @@ body{
 }
 
 .statWrapper{
-    width: 15em;
+    width: 12em;
     margin: auto;
-    padding-top: 2em;
+    padding-top: .5em;
 }
 
 .gameWrapper{
@@ -79,6 +79,10 @@ body{
     display: none;
 }
 
+.behind {
+    z-index: -1 !important;
+}
+
 .correctAnswer {
     background-color: green;
     
@@ -86,7 +90,7 @@ body{
 
 .wrongAnswer {
     background-color: red;
-  
+    
 }
 
 .headTitle {
@@ -99,9 +103,46 @@ body{
 }
 
 .statPlaceholder {
-    padding-top: 1em;
+    padding-top: .75em;
 }
 
 .radioButton {
     text-align: left;
+}
+
+#currentGoal {
+    font-size: 1em;
+    margin-top: -.25em;
+}
+
+
+.modal {
+    width: 450px;
+    height: 300px;
+    background-color: mediumaquamarine;
+    border: black 2px solid;
+    border-radius: 5px;
+}
+
+.center {
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+  }
+
+.goalRadio {
+    text-align: center;
+}
+
+#confirmGoal {
+    background-color: white;
+    border-radius: 1px;
+}
+
+#simplemodal-overlay {
+    opacity: 1;
+}
+
+#simplemodal-container {
+    opacity: 1;
 }

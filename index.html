@@ -60,8 +60,9 @@
 <div id="rightLane" class="lane">
     <div class="statWrapper">
         <h2 class="statTitle">Game Stats</h2>
-        <div class="statPlaceholder">All Time High Score:</div>
-        <div id="allTimeHighScore" class="statPlaceholder"></div><br>
+        <div class="statPlaceholder">Current Goal: </div>
+        <div id="currentGoal" class="statPlaceholder"></div>
+            <br>
         <div class="statPlaceholder">Total Correct this Round:</div>
         <div id="totalCorrect" class="statPlaceholder"></div><br>
         <div class="statPlaceholder">Percent Correct this Round:</div>
@@ -69,28 +70,25 @@
         
     </div>
 </div>
+
+<div id="welcomeModal" class="modal center hidden"><h1>Welcome Reagan!</h1>
+    <div><h3>Set your goal for this round.</h3></div>
+        <form action="" class="goalRadio">
+            <input type="radio" name="goalValue" value="10"> 10 correct<br>
+            <input type="radio" name="goalValue" value="25"> 25 correct<br>
+            <input type="radio" name="goalValue" value="50"> 50 correct<br>
+            <input type="radio" name="goalValue" value="100"> 100 correct<br>
+          </form>
+        <div><h4>You must pass with a % of 85 or higher to complete the goal.</h4></div>
+        <button id="confirmGoal" onclick="hideWelcomeModal()">Play!</button>
+</div>
+
 </body>
 
 
-<script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
-<!-- <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script> -->
-<!-- <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-auth.js"></script> -->
-<script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
-<!-- <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-messaging.js"></script> -->
-<script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyCbiE0KWjPhP-GfeVEEwLeE1B5kbZiI6q4",
-    authDomain: "learning-game-344c7.firebaseapp.com",
-    databaseURL: "https://learning-game-344c7.firebaseio.com",
-    projectId: "learning-game-344c7",
-    storageBucket: "learning-game-344c7.appspot.com",
-    messagingSenderId: "924113702049"
-  };
-  firebase.initializeApp(config);
-  var database = firebase.database();
-</script>
+
 <script src="jquery-3.1.1.js"></script>
+<script src="jquery.simplemodal-1.4.4.js"></script>
 <script type ="text/javascript" src="LGaction.js"></script>
 
 </html>
