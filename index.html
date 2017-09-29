@@ -85,8 +85,16 @@
             <input type="radio" name="goalValue" value="50"> 50 correct<br>
             <input type="radio" name="goalValue" value="100"> 100 correct<br>
           </form>
-        <div><h4>You must pass with a % of 85 or higher to complete the goal.</h4></div>
+        <div><h4>You must pass with a % of 80 or higher to complete the goal.</h4></div>
         <button id="confirmGoal" onclick="hideWelcomeModal()">Play!</button>
+</div>
+
+<div id="finishedModal" class="modal center hidden"><h1>You have finished!</h1>
+    <div><h3 id="finishedResult"></h3></div>
+        <div><h5 id= "EndMessageGoalSet"></h5></div>
+        <div><h5 id= "EndMessageTotalAnswered"></h5></div>
+        <div><h5 id= "EndMessagePercentCorrect"></h5></div>
+        <button id="confirmFinish" onclick="hideFinishedModal()">End Session</button>
 </div>
 
 </body>

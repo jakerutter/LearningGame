@@ -580,7 +580,6 @@ function preGame() {
     document.getElementById('welcomeModal').classList.remove('hidden');
     $("#welcomeModal").modal();
 
-    
     var goal;
     loop();
 
@@ -601,20 +600,51 @@ function hideWelcomeModal(name) {
     document.getElementById('welcomeModal').classList.add('behind');
     document.getElementById('simplemodal-overlay').classList.add('behind');
     document.getElementById('simplemodal-container').classList.add('behind');
-    
-
     }
 }
 
 function goalMet(globalCorrect, currentGoal, percentCorrect){
-    if ((globalCorrect >= currentGoal) && (percentCorrect >= 85)) {
-        alert("Great work Reagan! Show this message to Mom or Dad and you are finished!")
+    if (globalCorrect >= currentGoal) {
+        showFinishedModal(globalCorrect, currentGoal, percentCorrect);
+    }
+}
+
+function showFinishedModal(globalCorrect, currentGoal, percentCorrect){
+    document.getElementById('finishedModal').classList.remove('hidden');
+    $("#finishedModal").modal();
+    if (percentCorrect >= 85){
+        document.getElementById('finishedModal').classList.add("finishedGood");
+        document.getElementById('finishedResult').innerHTML = ("PASSED with flying colors!");
+    }
+    if (percentCorrect < 85 && percentCorrect >= 80){
+        document.getElementById('finishedModal').classList.add("finishedFair");
+        document.getElementById('finishedResult').innerHTML = ("You passed with a fair grade.");
+    }
+    if (percentCorrect < 80){
+        document.getElementById('finishedModal').classList.add("finishedPoor");
+        document.getElementById('finishedResult').innerHTML = ("Please try again. Your score was too low to pass.")
+    }
+    document.getElementById('EndMessageGoalSet').innerHTML = ("The goal you set was "+ currentGoal + ".");
+    document.getElementById('EndMessageTotalAnswered').innerHTML = ("You answered "+ globalCorrect + " correct.");
+    document.getElementById('EndMessagePercentCorrect').innerHTML = ("You finished with "+ percentCorrect.toFixed(2) + "% correct.")
+    exit();
+
+    function exit(){
+        if (getElementById('finishedModal').classList.contains('hidden')) {
+            setTimeout(exit, 1000);   
         }
-    else if ((globalCorrect >= currentGoal) && (percentCorrect < 85)) {
-        alert("Please refresh and try again. You missed too many problems.")
+        else{
+            hideFinishedModal();   
         }
-    else {
-        alert("Error. Have Mom or Dad check your stats.")
+    }
+}
+
+function hideFinishedModal(){
+    if (currentGoal.innerHTML != ""){
+        document.getElementById('finishedModal').classList.add('hidden');
+        document.getElementById('finishedModal').classList.add('behind');
+        document.getElementById('simplemodal-overlay').classList.add('behind');
+        document.getElementById('simplemodal-container').classList.add('behind');
     }
 }
 
@@ -623,11 +653,26 @@ function changeStyling(percentCorrect) {
         if (document.getElementById('percentCorrect').classList.contains('doingPoor')) {
             document.getElementById('percentCorrect').classList.remove('doingPoor');
         }
+        if (document.getElementById('percentCorrect').classList.contains('doingFair')) {
+            document.getElementById('percentCorrect').classList.remove('doingFair');
+        }
             document.getElementById('percentCorrect').classList.add('doingGood');
     }
-    if (percentCorrect < 85){
+    if (percentCorrect <85 && percentCorrect >= 80){
+        if (document.getElementById('percentCorrect').classList.contains('doingPoor')) {
+            document.getElementById('percentCorrect').classList.remove('doingPoor');
+        }
         if (document.getElementById('percentCorrect').classList.contains('doingGood')) {
             document.getElementById('percentCorrect').classList.remove('doingGood');
+        }
+            document.getElementById('percentCorrect').classList.add('doingFair');
+    }
+    if (percentCorrect < 80){
+        if (document.getElementById('percentCorrect').classList.contains('doingGood')) {
+            document.getElementById('percentCorrect').classList.remove('doingGood');
+        }
+        if (document.getElementById('percentCorrect').classList.contains('doingFair')) {
+            document.getElementById('percentCorrect').classList.remove('doingFair');
         }
             document.getElementById('percentCorrect').classList.add('doingPoor');
     }

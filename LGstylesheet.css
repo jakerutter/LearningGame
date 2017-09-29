@@ -167,3 +167,18 @@ body{
 .doingPoor {
     color: red;
 }
+
+.finishedGood {
+    background-color: green;
+    color: white;
+}
+
+.finishedFair {
+    background-color: black;
+    color: white;
+}
+
+.finishedPoor {
+    background-color: red;
+    color: black;
+}
