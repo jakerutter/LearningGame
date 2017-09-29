@@ -12,13 +12,13 @@ body{
 }
 
 .statWrapper{
-    width: 12em;
+    width: 15em;
     margin: auto;
     padding-top: .5em;
 }
 
 .gameWrapper{
-    width: 55em;
+    width: 50em;
     margin: auto;
     /* align-self: auto;
     text-align: center; */
@@ -29,14 +29,14 @@ body{
 .row {
   display: inline-block;
   background-color: white;
-  width: 55em;
+  width: 50em;
   height: 10em;
 }
 
 .miniRow {
   display: inline-block;
   background-color: white;
-  width: 55em;
+  width: 50em;
   height: 2em;
 }
 
@@ -104,6 +104,19 @@ body{
 
 .statPlaceholder {
     padding-top: .75em;
+    font-size: 1.5em;
+}
+
+.statPlaceholderText{
+    padding-top: 1em;
+    font-size: 1em;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.statPlaceholderText .radioButton{
+    padding-top: 0;
+    font-size: .75em;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .radioButton {
@@ -153,12 +166,4 @@ body{
 
 .doingPoor {
     color: red;
-}
-
-#percentCorrect {
-    font-size: 1.5em;
-}
-
-#totalCorrect {
-    font-size: 1.5em;
 }

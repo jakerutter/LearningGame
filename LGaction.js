@@ -15,7 +15,7 @@ function PlayMathGame(){
             var currentScore = document.getElementById('correctCounter').value;
         }
         
-        problemObj = new createMathProblem(0,0,"","",0);
+        problemObj = new createMathProblem(0,0,"","",0,"");
         
         createMathProblem(problemObj);
         determineAnswer(problemObj);
@@ -58,12 +58,15 @@ function createProblemObj(num1, num2, sign, problem, correctAnswer){
     this.sign = sign;
     this.problem = problem;
     this.correctAnswer = correctAnswer;
+    this.variable = variable;
     }
 //Takes problem obj and calls the appropriate Math Function
 function createMathProblem(problemObj) {
     var radioValue = $("input[name='problemSize']:checked").val();
     var radioType = $("input[name='problemType']:checked").val();
-   if(problemObj.problem = ""){
+    var radioStyle = $("input[name='problemStyle']:checked").val();
+ if (radioStyle == "Answer"){
+   if (problemObj.problem = ""){
     var num1 = getRandomInt(0, radioValue);
     var num2 = getRandomInt(0, radioValue);
     var sign;
@@ -163,15 +166,129 @@ function createMathProblem(problemObj) {
             problemObj.sign = sign;
             problemObj.problem = problem;
         }
+        return problemObj;
+
+    } else {
+        if (problemObj.problem = ""){
+            var num1 = getRandomInt(0, radioValue);
+            var num2 = getRandomInt(0, radioValue);
+            var sign;
+            var correctAnswer;
+            var variableArray = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+            var randomIndex = Math.floor(Math.random() * variableArray.length);
+            var variable = variableArray[randomIndex];
+           
+            if (radioType == "addsub"){
+                var signForOperation = Math.random();
+                if (signForOperation < .5 || radioType == "sub"){
+                    sign = "-";
+                     num1 = Math.max(num1,num2);
+                     num2 = Math.min(num1,num2);
+                }
+                else if (signForOperation >= .5 || radioType == "add"){
+                    sign = "+";
+                }
+            }
+            else if (radioType == "add"){
+                sign = "+";
+            }
+            else if (radioType == "sub"){
+                sign = "-";
+            }
+            else if (radioType == "multdiv"){
+                var signForOperation = Math.random();
+                if (signForOperation < .5){
+                    sign = "/";
+                    num1 = Math.max(num1,num2)+1;
+                    num2 = getFactors(num1);
+                }
+                else if (signForOperation >= .5 || radioType == "mult"){
+                    sign = "*";
+                }
+            }
+            else if (radioType == "mult"){
+                sign = "*";
+            }
+            else if (radioType == "div"){
+                sign = "/";
+                num1 = Math.max(num1,num2)+1;
+                num2 = getFactors(num1);
+            }
                  
+                // var problem = (num1.toString()+" "+ sign +" "+ variable);
+                problemObj.num1 = num1;
+                problemObj.num2 = num2;
+                problemObj.sign = sign;
+                problemObj.problem = problem;
+                problemObj.variable = variable;
+        
+            } else {
+        
+                 num1 = getRandomInt(0, radioValue);
+                 num2 = getRandomInt(0, radioValue);
+                 sign = "";
+                 correctAnswer;
+                 variable;
+                 variableArray = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+                 randomIndex = Math.floor(Math.random()* variableArray.length);
+                 variable = variableArray[randomIndex];
+
+                 if (radioType == "addsub"){
+                    signForOperation = Math.random();
+                    if (signForOperation < .5){
+                        sign = "-";
+                         num1 = Math.max(num1,num2);
+                         num2 = Math.min(num1,num2);
+                    }
+                    else if (signForOperation >= .5){
+                        sign = "+";
+                    }
+                }
+                else if (radioType == "add"){
+                    sign = "+";
+                }
+                else if (radioType == "sub"){
+                    sign = "-";
+                    num1 = Math.max(num1,num2);
+                    num2 = Math.min(num1,num2);
+                }
+                else if (radioType == "multdiv"){
+                    signForOperation = Math.random();
+                    if (signForOperation < .5){
+                        sign = "/";
+                        num1 = Math.max(num1,num2)+1;
+                        num2 = getFactors(num1);
+                    }
+                    else if (signForOperation >= .5){
+                        sign = "*";
+                    }
+                }
+                else if (radioType == "mult"){
+                    sign = "*";
+                }
+                else if (radioType == "div"){
+                    sign = "/";
+                    num1 = Math.max(num1,num2)+1;
+                    num2 = getFactors(num1);
+                }
+                     
+                    // problem = (num1.toString()+" "+ sign +" "+ variable);
+                    problemObj.num1 = num1;
+                    problemObj.num2 = num2;
+                    problemObj.sign = sign;
+                    problemObj.problem = problem;
+                    problemObj.variable = variable;
+                }
+        }       
         return problemObj;
     }
-    //Broken Code. I like the switch if I can find out how to integrate it and shorten the code I want to:
 
 
 //Populate the correct answer value
 function determineAnswer(problemObj){
+    var radioStyle = $("input[name='problemStyle']:checked").val();
     var correctAnswer = "";
+    if (radioStyle == "Answer") {
     if (problemObj.sign == "+"){
         correctAnswer = Number(problemObj.num1+problemObj.num2);
     }
@@ -192,6 +309,36 @@ function determineAnswer(problemObj){
     problemObj.correctAnswer = correctAnswer;
 
     return problemObj;
+    }
+    else {
+        if (problemObj.sign == "+") {
+            var standardAnswer = Number(problemObj.num1 + problemObj.num2);
+            problem = (problemObj.num1.toString()+" "+ problemObj.sign +" "+ problemObj.variable +" = "+ standardAnswer.toString());
+            problemObj.problem = problem;
+            correctAnswer = Number(standardAnswer - problemObj.num1);
+        }
+        if (problemObj.sign == "-"){
+            var standardAnswer = Number(problemObj.num1 - problemObj.num2);
+            problem = (problemObj.num1.toString()+" "+ problemObj.sign +" "+ problemObj.variable +" = "+ standardAnswer.toString());
+            problemObj.problem = problem;
+            correctAnswer = Number(problemObj.num1 - standardAnswer);
+        }
+        if (problemObj.sign == "*"){
+            var standardAnswer = Number(problemObj.num1 * problemObj.num2);
+            problem = (problemObj.num1.toString()+" "+ problemObj.sign +" "+ problemObj.variable +" = "+ standardAnswer.toString());
+            problemObj.problem = problem;
+            correctAnswer = Number(standardAnswer / problemObj.num1);
+        }
+        if (problemObj.sign == "/"){
+            var standardAnswer = Number(problemObj.num1 / problemObj.num2);
+            problem = (problemObj.num1.toString()+" "+ problemObj.sign +" "+ problemObj.variable +" = "+ standardAnswer.toString());
+            problemObj.problem = problem;
+            correctAnswer = Number(standardAnswer * problemObj.num2);
+        }
+        problemObj.correctAnswer = correctAnswer;
+    
+        return problemObj;
+    }
         }
 
 //Function that will take the generated math problem and place it
