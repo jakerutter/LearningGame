@@ -174,7 +174,7 @@ function createMathProblem(problemObj) {
             var num2 = getRandomInt(0, radioValue);
             var sign;
             var correctAnswer;
-            var variableArray = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+            var variableArray = ["a","b","c","d","e","f","g","h","i","j","k","m","n","p","q","r","s","t","u","v","w","x","y","z"];
             var randomIndex = Math.floor(Math.random() * variableArray.length);
             var variable = variableArray[randomIndex];
            
@@ -229,7 +229,7 @@ function createMathProblem(problemObj) {
                  sign = "";
                  correctAnswer;
                  variable;
-                 variableArray = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+                 variableArray = ["a","b","c","d","e","f","g","h","i","j","k","m","n","p","q","r","s","t","u","v","w","x","y","z"];
                  randomIndex = Math.floor(Math.random()* variableArray.length);
                  variable = variableArray[randomIndex];
 
@@ -604,17 +604,23 @@ function hideWelcomeModal(name) {
 }
 
 function goalMet(globalCorrect, currentGoal, percentCorrect){
+    if (currentGoal != "None"){
     if (globalCorrect >= currentGoal) {
+        var status =  percentCorrect >= 80 ? "passed" : "failed";
+        getFinishedSound(status)
         showFinishedModal(globalCorrect, currentGoal, percentCorrect);
+        }
     }
 }
 
 function showFinishedModal(globalCorrect, currentGoal, percentCorrect){
+    var questionsAnswered = document.getElementById('questionsAnswered').innerHTML;
     document.getElementById('finishedModal').classList.remove('hidden');
     $("#finishedModal").modal();
     if (percentCorrect >= 85){
         document.getElementById('finishedModal').classList.add("finishedGood");
         document.getElementById('finishedResult').innerHTML = ("PASSED with flying colors!");
+
     }
     if (percentCorrect < 85 && percentCorrect >= 80){
         document.getElementById('finishedModal').classList.add("finishedFair");
@@ -625,8 +631,9 @@ function showFinishedModal(globalCorrect, currentGoal, percentCorrect){
         document.getElementById('finishedResult').innerHTML = ("Please try again. Your score was too low to pass.")
     }
     document.getElementById('EndMessageGoalSet').innerHTML = ("The goal you set was "+ currentGoal + ".");
-    document.getElementById('EndMessageTotalAnswered').innerHTML = ("You answered "+ globalCorrect + " correct.");
+    document.getElementById('EndMessageTotalAnswered').innerHTML = ("You answered "+ globalCorrect + " correct out of " + questionsAnswered + " attempted.");
     document.getElementById('EndMessagePercentCorrect').innerHTML = ("You finished with "+ percentCorrect.toFixed(2) + "% correct.")
+
     exit();
 
     function exit(){
@@ -675,5 +682,34 @@ function changeStyling(percentCorrect) {
             document.getElementById('percentCorrect').classList.remove('doingFair');
         }
             document.getElementById('percentCorrect').classList.add('doingPoor');
+    }
+}
+
+function getFinishedSound(status) {
+    var soundList = [3];
+    if (status == "passed"){
+        var chosenSound = soundList[Math.floor(Math.random() * soundList.length)];
+        if (chosenSound == 1){
+            document.getElementById('congrats1').play();
+        }
+        if (chosenSound == 2){
+            document.getElementById('congrats2').play();
+        }
+        if (chosenSound == 3){
+            document.getElementById('congrats3').play();
+        }
+    }
+    else {
+        var chosenSound = soundList[Math.floor(Math.random() * soundList.length)];
+        if (chosenSound == 1){
+            document.getElementById('failed1').play();
+        }
+        if (chosenSound == 2){
+            document.getElementById('failed2').play();
+        }
+        if (chosenSound == 3){
+            document.getElementById('failed3').play();
+        }
+        
     }
 }
