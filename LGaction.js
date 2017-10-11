@@ -698,8 +698,7 @@ function getFinishedSound(status) {
         if (chosenSound == 3){
             document.getElementById('congrats3').play();
         }
-    }
-    else {
+    } else {
         var chosenSound = soundList[Math.floor(Math.random() * soundList.length)];
         if (chosenSound == 1){
             document.getElementById('failed1').play();
