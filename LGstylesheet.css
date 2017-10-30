@@ -1,43 +1,47 @@
 
 body{
-    background-color: #66CDA9;
+    /* background-color: white; */
     text-align: center;
+    }
+
+#wholeWrapper {
+    /* background-color:white; */
+    /* display: inline-block; */
+    height: 50em;
+
     }
 
 .lane {
     display: inline-block;
     vertical-align: top;
-    background-color: white;
-    height: 30em;
+    /* background-color: white; */
+    height: auto;
 }
 
 .statWrapper{
     width: 15em;
     margin: auto;
-    padding-top: .5em;
 }
 
-.gameWrapper{
+#gameWrapper{
+    display: inline-block;
     width: 50em;
     margin: auto;
-    /* align-self: auto;
-    text-align: center; */
-    background-color: white;
-    padding-bottom: 4em;
 }
 
 .row {
   display: inline-block;
-  background-color: white;
+  /* background-color: white; */
   width: 50em;
   height: 10em;
 }
 
 .miniRow {
   display: inline-block;
-  background-color: white;
-  width: 50em;
+  /* background-color: white; */
+  margin:auto;
   height: 2em;
+
 }
 
 .cell {
@@ -46,14 +50,16 @@ body{
   height: 10em;
   text-align: center;
   vertical-align: middle;
-  line-height: 10em;
+  /* line-height: 10em; */
+  opacity: 1;
 }
 
 .question {
-    background-color: white;
+    /* background-color: white; */
     color: blue;
     /* vertical-align: middle;  */
     font-size: 1em;
+    opacity: 1;
 }
 
 .questionButton{
@@ -68,6 +74,7 @@ body{
     /* vertical-align: middle;  */
     font-size: 1em;
     font-style: bold;
+    opacity: 1;
 }
 
 .answerOption:hover {
@@ -131,7 +138,7 @@ body{
 
 .modal {
     width: 450px;
-    height: 300px;
+    height: 330px;
     background-color: mediumaquamarine;
     border: black 2px solid;
     border-radius: 5px;
@@ -181,4 +188,25 @@ body{
 .finishedPoor {
     background-color: red;
     color: black;
+}
+
+.bodyBackgroundGood {
+    background: -webkit-linear-gradient(bottom, white, green);
+    background: -moz-linear-gradient(bottom, white, green);
+    background: -ms-linear-gradient(bottom, white, green);
+    background: linear-gradient(bottom, white, green);
+}
+
+.bodyBackgroundFair {
+    background: -webkit-linear-gradient(bottom, white, white);
+    background: -moz-linear-gradient(bottom, white, white);
+    background: -ms-linear-gradient(bottom, white, white);
+    background: linear-gradient(bottom, white, white);
+}
+
+.bodyBackgroundPoor {
+    background: -webkit-linear-gradient(bottom, white, red);
+    background: -moz-linear-gradient(bottom, white, red);
+    background: -ms-linear-gradient(bottom, white, red);
+    background: linear-gradient(bottom, white, red);
 }

@@ -6,7 +6,12 @@
 </head>
 <body>
     
-<h1 class= "headTitle">Reagan's Learning Game</h1>
+<h1 class="headTitle">Reagan's Learning Game</h1>
+
+    <div id="labelResults" class="miniRow"></div>
+    <div id="correctCounterLabel" class="miniRow"></div>
+
+<div id="wholeWrapper">
 <div id="leftLane" class="lane">
     <div class="statWrapper">
         <h2 class="statTitle">Game Settings</h2>
@@ -35,10 +40,8 @@
         </div>
     </div>
 </div>
-<div id="middleLane" class="lane">
-    <div class="gameWrapper">
-        <div id="labelResults" class="miniRow"></div>
-            <div id="correctCounterLabel" class="miniRow"></div>
+
+    <div id="gameWrapper" class="gameWrapper">
        
         <div class="row">
             <div id="leftTop" class="cell"></div>
@@ -55,12 +58,7 @@
             <button id="Bottom" class="cell answerOption" ></button>
             <div id="rightBottom" class="cell"></div>   
         </div>
-        
-        <div id="correctCounter" class="hidden">0</div>
-        <div id="questionsAnswered" class="hidden">0</div>
-        <div id="globalCorrect" class="hidden">0</div>
 
-    </div>
 </div>
 
 <div id="rightLane" class="lane">
@@ -76,6 +74,8 @@
         
     </div>
 </div>
+</div>
+
 
 <div id="welcomeModal" class="modal center hidden"><h1>Welcome Reagan!</h1>
     <div><h3>Set your goal for this round.</h3></div>
@@ -97,6 +97,11 @@
         <div><h5 id= "EndMessagePercentCorrect"></h5></div>
         <button id="confirmFinish" onclick="hideFinishedModal()">End Session</button>
 </div>
+
+<div id="correctCounter" class="hidden">0</div>
+<div id="questionsAnswered" class="hidden">0</div>
+<div id="globalCorrect" class="hidden">0</div>
+
 
 </body>
 

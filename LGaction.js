@@ -465,7 +465,6 @@ function compareSelection(problemObj, selection){
         globalCorrect += 1;
         document.getElementById('globalCorrect').innerHTML = globalCorrect;
         
-        
     }
     else {
         document.getElementById("labelResults").innerHTML = "Please try again.";
@@ -482,8 +481,8 @@ function compareSelection(problemObj, selection){
     document.getElementById('percentCorrect').innerHTML = percentCorrect.toFixed(2) + "%";
     document.getElementById('totalCorrect').innerHTML = globalCorrect.toString();
     
-    changeStyling(percentCorrect);
-
+    changeStyling(percentCorrect, questionsAnswered);
+    trackProgress(currentGoal, questionsAnswered);
     if (globalCorrect >= currentGoal){
         goalMet(globalCorrect, currentGoal, percentCorrect);
         }
@@ -655,7 +654,8 @@ function hideFinishedModal(){
     }
 }
 
-function changeStyling(percentCorrect) {
+function changeStyling(percentCorrect, questionsAnswered) {
+
     if (percentCorrect >= 85){
         if (document.getElementById('percentCorrect').classList.contains('doingPoor')) {
             document.getElementById('percentCorrect').classList.remove('doingPoor');
@@ -686,9 +686,9 @@ function changeStyling(percentCorrect) {
 }
 
 function getFinishedSound(status) {
-    var soundList = [3];
+    var soundList = [1,2,3];
+    var chosenSound = soundList[Math.floor(Math.random() * soundList.length)];
     if (status == "passed"){
-        var chosenSound = soundList[Math.floor(Math.random() * soundList.length)];
         if (chosenSound == 1){
             document.getElementById('congrats1').play();
         }
@@ -699,7 +699,6 @@ function getFinishedSound(status) {
             document.getElementById('congrats3').play();
         }
     } else {
-        var chosenSound = soundList[Math.floor(Math.random() * soundList.length)];
         if (chosenSound == 1){
             document.getElementById('failed1').play();
         }
@@ -712,3 +711,47 @@ function getFinishedSound(status) {
         
     }
 }
+
+//Function will take the currentGoal and questionsAnswered values as parameters and 
+//use these values to update and style a progression chart displayed on the page.
+function trackProgress(currentGoal, questionsAnswered) {
+    var status = currentStatus();
+    
+    if (currentGoal != "None") {
+        if (status == "good") {
+            $('body').removeClass("bodyBackgroundFair");
+            $('body').removeClass("bodyBackgroundPoor");
+            $('body').addClass("bodyBackgroundGood");
+            bodyColor = ($('body').height() * (questionsAnswered/currentGoal));
+    }
+        if (status == "fair") {
+            $('body').removeClass("bodyBackgroundGood");
+            $('body').removeClass("bodyBackgroundPoor");
+            $('body').addClass("bodyBackgroundFair");
+            bodyColor = ($('body').height() * (questionsAnswered/currentGoal));
+        }
+        if (status == "poor") {
+            $('body').removeClass("bodyBackgroundGood");
+            $('body').removeClass("bodyBackgroundFair");
+            $('body').addClass("bodyBackgroundPoor");
+            bodyColor = ($('body').height() * (questionsAnswered/currentGoal));
+            }
+        }
+    }
+
+//This function will take in the gloabalAnswered and the globalCorrect and return
+//the current status of the user's performance. Statuses are good, fair, poor.
+function currentStatus() {
+    var percentCorrect = parseInt($('#percentCorrect').text());
+
+    if (percentCorrect >= 85){
+        status = "good";
+    }
+    if (percentCorrect < 85 && percentCorrect >= 80){
+       status = "fair";
+    }
+    if (percentCorrect < 80){
+        status = "poor";    
+        }
+        return status;
+    }
