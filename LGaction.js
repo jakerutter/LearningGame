@@ -483,8 +483,8 @@ function compareSelection(problemObj, selection){
     
     changeStyling(percentCorrect, questionsAnswered);
     trackProgress(currentGoal, questionsAnswered);
-    if (globalCorrect >= currentGoal){
-        goalMet(globalCorrect, currentGoal, percentCorrect);
+    if (questionsAnswered >= currentGoal){
+        goalMet(globalCorrect, currentGoal, percentCorrect, questionsAnswered);
         }
     }
 
@@ -602,15 +602,16 @@ function hideWelcomeModal(name) {
     }
 }
 
-function goalMet(globalCorrect, currentGoal, percentCorrect){
+function goalMet(globalCorrect, currentGoal, percentCorrect, questionsAnswered){
     if (currentGoal != "None"){
-    if (globalCorrect >= currentGoal) {
-        var status =  percentCorrect >= 80 ? "passed" : "failed";
-        getFinishedSound(status)
-        showFinishedModal(globalCorrect, currentGoal, percentCorrect);
+        var questionsAnswered = document.getElementById('questionsAnswered').innerHTML;
+            if (questionsAnswered >= currentGoal) {
+                var status =  percentCorrect >= 80 ? "passed" : "failed";
+                getFinishedSound(status)
+                showFinishedModal(globalCorrect, currentGoal, percentCorrect);
+                }
+            }
         }
-    }
-}
 
 function showFinishedModal(globalCorrect, currentGoal, percentCorrect){
     var questionsAnswered = document.getElementById('questionsAnswered').innerHTML;
@@ -715,26 +716,34 @@ function getFinishedSound(status) {
 //Function will take the currentGoal and questionsAnswered values as parameters and 
 //use these values to update and style a progression chart displayed on the page.
 function trackProgress(currentGoal, questionsAnswered) {
-    var status = currentStatus();
     
+    var status = currentStatus();
+
     if (currentGoal != "None") {
+        // var bodyElem = document.getElementsByTagName("BODY")[0];
+        var progress = questionsAnswered / currentGoal * 100;
+        var bodyColor;
+
         if (status == "good") {
-            $('body').removeClass("bodyBackgroundFair");
-            $('body').removeClass("bodyBackgroundPoor");
-            $('body').addClass("bodyBackgroundGood");
-            bodyColor = ($('body').height() * (questionsAnswered/currentGoal));
+            bodyColor = "green";
+            $('percentCorrect').removeClass("doingPoor");
+            $('percentCorrect').removeClass("doingfair");
+            $('percentCorrect').addClass("doingGood");
+            document.body.style.background = "-webkit-linear-gradient(bottom, "+ bodyColor +" "+ progress +"%, white 100%)";
     }
         if (status == "fair") {
-            $('body').removeClass("bodyBackgroundGood");
-            $('body').removeClass("bodyBackgroundPoor");
-            $('body').addClass("bodyBackgroundFair");
-            bodyColor = ($('body').height() * (questionsAnswered/currentGoal));
+            bodyColor = "white";
+            $('percentCorrect').removeClass("doingPoor");
+            $('percentCorrect').removeClass("doingGood");
+            $('percentCorrect').addClass("doingFair");
+            document.body.style.background = "-webkit-linear-gradient(bottom, "+ bodyColor+ " "+progress +"%, white 100%)";
         }
         if (status == "poor") {
-            $('body').removeClass("bodyBackgroundGood");
-            $('body').removeClass("bodyBackgroundFair");
-            $('body').addClass("bodyBackgroundPoor");
-            bodyColor = ($('body').height() * (questionsAnswered/currentGoal));
+            bodyColor = "red";
+            $('percentCorrect').removeClass("doingGood");
+            $('percentCorrect').removeClass("doingFair");
+            $('percentCorrect').addClass("doingPoor");
+            document.body.style.background = "-webkit-linear-gradient(bottom, "+ bodyColor+ " "+progress +"%, white 100%)";
             }
         }
     }

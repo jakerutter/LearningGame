@@ -1,6 +1,7 @@
 
 body{
     /* background-color: white; */
+    height: 100%;
     text-align: center;
     }
 
@@ -19,7 +20,7 @@ body{
 }
 
 .statWrapper{
-    width: 15em;
+    width: 18em;
     margin: auto;
 }
 
@@ -168,11 +169,15 @@ body{
 }
 
 .doingGood {
-    color: green; 
+    color: white; 
+}
+
+.doingFair {
+    color: black;
 }
 
 .doingPoor {
-    color: red;
+    color: white;
 }
 
 .finishedGood {
@@ -190,14 +195,16 @@ body{
     color: black;
 }
 
-.bodyBackgroundGood {
-    background: -webkit-linear-gradient(bottom, white, green);
-    background: -moz-linear-gradient(bottom, white, green);
-    background: -ms-linear-gradient(bottom, white, green);
-    background: linear-gradient(bottom, white, green);
+/* .bodyBackgroundGood {
+    background-color: white;
+    background: -webkit-linear-gradient(45deg, white, green);
+    background: -moz-linear-gradient(45deg, white, green);
+    background: -ms-linear-gradient(45deg, white, green);
+    background: linear-gradient(45deg, white, green);
 }
 
 .bodyBackgroundFair {
+    background-color: white;
     background: -webkit-linear-gradient(bottom, white, white);
     background: -moz-linear-gradient(bottom, white, white);
     background: -ms-linear-gradient(bottom, white, white);
@@ -205,8 +212,9 @@ body{
 }
 
 .bodyBackgroundPoor {
-    background: -webkit-linear-gradient(bottom, white, red);
-    background: -moz-linear-gradient(bottom, white, red);
-    background: -ms-linear-gradient(bottom, white, red);
-    background: linear-gradient(bottom, white, red);
-}
+    background-color: white;
+    background: -webkit-linear-gradient(305deg, white, red);
+    background: -moz-linear-gradient(305deg, white, red);
+    background: -ms-linear-gradient(305deg, white, red);
+    background: linear-gradient(305deg, white, red);
+} */
