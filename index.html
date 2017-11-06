@@ -67,9 +67,11 @@
         <div class="statPlaceholderText">Current Goal: </div>
         <div id="currentGoal" class="statPlaceholder"></div>
             <br>
-        <div class="statPlaceholderText">Total Correct this Round:</div>
+        <div class="statPlaceholderText">Answered this Round:</div>
+        <div id="totalAnswered" class="statPlaceholder"></div><br>
+        <div class="statPlaceholderText">Correct this Round:</div>
         <div id="totalCorrect" class="statPlaceholder"></div><br>
-        <div class="statPlaceholderText">Percent Correct this Round:</div>
+        <div class="statPlaceholderText">% Correct:</div>
         <div id="percentCorrect" class="statPlaceholder"></div>
         
     </div>
@@ -101,20 +103,26 @@
 <div id="correctCounter" class="hidden">0</div>
 <div id="questionsAnswered" class="hidden">0</div>
 <div id="globalCorrect" class="hidden">0</div>
+<div id="listWrongAnswers" class="hidden"></div>
 
 
-</body>
+
 
 
 
 <script src="jquery-3.1.1.js"></script>
 <script src="jquery.simplemodal-1.4.4.js"></script>
 <script type ="text/javascript" src="LGaction.js"></script>
+
 <audio type="audio" id='failed1' src="Failed1.m4a"></audio>
 <audio type="audio" id='failed2' src="Failed2.m4a"></audio>
 <audio type="audio" id='failed3' src="Failed3.m4a"></audio>
 <audio type="audio" id='congrats1' src="Congrats1.m4a"></audio>
 <audio type="audio" id='congrats2' src="Congrats2.m4a"></audio>
 <audio type="audio" id='congrats3' src="Congrats3.m4a"></audio>
+<audio type="audio" id='correctSound' src="chaChing.wav"></audio>
+<audio type="audio" id='wrongSound' src="wrongBuzz.wav"></audio>
+</body>
+
 </html>
 

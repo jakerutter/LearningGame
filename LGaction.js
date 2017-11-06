@@ -464,7 +464,8 @@ function compareSelection(problemObj, selection){
         document.getElementById(selection.id).classList.add('correctAnswer');
         globalCorrect += 1;
         document.getElementById('globalCorrect').innerHTML = globalCorrect;
-        
+        var isCorrect = true;
+        getAnsweredSound(isCorrect);
     }
     else {
         document.getElementById("labelResults").innerHTML = "Please try again.";
@@ -472,6 +473,9 @@ function compareSelection(problemObj, selection){
         document.getElementById("correctCounter").innerHTML = correctCount.toString();
         document.getElementById("correctCounterLabel").innerHTML = ("Current streak is: " + correctCount);
         document.getElementById(selection.id).classList.add('wrongAnswer');
+        var isCorrect = false;
+        getAnsweredSound(isCorrect);
+        document.getElementById("listWrongAnswers").innerHTML += (problemObj.problem + " ");
     }
 
     questionsAnswered += 1;
@@ -480,7 +484,7 @@ function compareSelection(problemObj, selection){
     document.getElementById('globalCorrect').innerHTML = globalCorrect.toString();
     document.getElementById('percentCorrect').innerHTML = percentCorrect.toFixed(2) + "%";
     document.getElementById('totalCorrect').innerHTML = globalCorrect.toString();
-    
+    document.getElementById('totalAnswered').innerHTML = questionsAnswered;
     changeStyling(percentCorrect, questionsAnswered);
     trackProgress(currentGoal, questionsAnswered);
     if (questionsAnswered >= currentGoal){
@@ -564,6 +568,7 @@ function divide(problemObj){
     problemObj.num2 -= extra;
     return problemObj;
     }
+
 function getFactors(num){
     var factorArray = [];
         for (i=1;i<=num;i++){
@@ -573,7 +578,6 @@ function getFactors(num){
         }
         return factorArray[Math.floor(Math.random() * factorArray.length)];
     }
-
 
 function preGame() {
     document.getElementById('welcomeModal').classList.remove('hidden');
@@ -606,7 +610,7 @@ function goalMet(globalCorrect, currentGoal, percentCorrect, questionsAnswered){
     if (currentGoal != "None"){
         var questionsAnswered = document.getElementById('questionsAnswered').innerHTML;
             if (questionsAnswered >= currentGoal) {
-                var status =  percentCorrect >= 80 ? "passed" : "failed";
+                var status =  percentCorrect >= 75 ? "passed" : "failed";
                 getFinishedSound(status)
                 showFinishedModal(globalCorrect, currentGoal, percentCorrect);
                 }
@@ -622,11 +626,11 @@ function showFinishedModal(globalCorrect, currentGoal, percentCorrect){
         document.getElementById('finishedResult').innerHTML = ("PASSED with flying colors!");
 
     }
-    if (percentCorrect < 85 && percentCorrect >= 80){
+    if (percentCorrect < 85 && percentCorrect >= 75){
         document.getElementById('finishedModal').classList.add("finishedFair");
         document.getElementById('finishedResult').innerHTML = ("You passed with a fair grade.");
     }
-    if (percentCorrect < 80){
+    if (percentCorrect < 75){
         document.getElementById('finishedModal').classList.add("finishedPoor");
         document.getElementById('finishedResult').innerHTML = ("Please try again. Your score was too low to pass.")
     }
@@ -652,6 +656,7 @@ function hideFinishedModal(){
         document.getElementById('finishedModal').classList.add('behind');
         document.getElementById('simplemodal-overlay').classList.add('behind');
         document.getElementById('simplemodal-container').classList.add('behind');
+        window.location.reload(true);
     }
 }
 
@@ -666,7 +671,7 @@ function changeStyling(percentCorrect, questionsAnswered) {
         }
             document.getElementById('percentCorrect').classList.add('doingGood');
     }
-    if (percentCorrect <85 && percentCorrect >= 80){
+    if (percentCorrect <85 && percentCorrect >= 75){
         if (document.getElementById('percentCorrect').classList.contains('doingPoor')) {
             document.getElementById('percentCorrect').classList.remove('doingPoor');
         }
@@ -675,7 +680,7 @@ function changeStyling(percentCorrect, questionsAnswered) {
         }
             document.getElementById('percentCorrect').classList.add('doingFair');
     }
-    if (percentCorrect < 80){
+    if (percentCorrect < 75){
         if (document.getElementById('percentCorrect').classList.contains('doingGood')) {
             document.getElementById('percentCorrect').classList.remove('doingGood');
         }
@@ -686,6 +691,7 @@ function changeStyling(percentCorrect, questionsAnswered) {
     }
 }
 
+//retrieve appropriate sound when game is completed.
 function getFinishedSound(status) {
     var soundList = [1,2,3];
     var chosenSound = soundList[Math.floor(Math.random() * soundList.length)];
@@ -713,6 +719,16 @@ function getFinishedSound(status) {
     }
 }
 
+function getAnsweredSound(isCorrect) {
+    if (isCorrect == true) {
+        document.getElementById('correctSound').play();
+    }
+    else {
+        document.getElementById('wrongSound').play();
+    }
+}
+//retrieve sound when a question is answered
+
 //Function will take the currentGoal and questionsAnswered values as parameters and 
 //use these values to update and style a progression chart displayed on the page.
 function trackProgress(currentGoal, questionsAnswered) {
@@ -720,29 +736,29 @@ function trackProgress(currentGoal, questionsAnswered) {
     var status = currentStatus();
 
     if (currentGoal != "None") {
-        // var bodyElem = document.getElementsByTagName("BODY")[0];
+        
         var progress = questionsAnswered / currentGoal * 100;
         var bodyColor;
 
         if (status == "good") {
             bodyColor = "green";
-            $('percentCorrect').removeClass("doingPoor");
-            $('percentCorrect').removeClass("doingfair");
-            $('percentCorrect').addClass("doingGood");
+            $('#percentCorrect').removeClass("doingPoor");
+            $('#percentCorrect').removeClass("doingfair");
+            $('#percentCorrect').addClass("doingGood");
             document.body.style.background = "-webkit-linear-gradient(bottom, "+ bodyColor +" "+ progress +"%, white 100%)";
     }
         if (status == "fair") {
             bodyColor = "white";
-            $('percentCorrect').removeClass("doingPoor");
-            $('percentCorrect').removeClass("doingGood");
-            $('percentCorrect').addClass("doingFair");
+            $('#percentCorrect').removeClass("doingPoor");
+            $('#percentCorrect').removeClass("doingGood");
+            $('#percentCorrect').addClass("doingFair");
             document.body.style.background = "-webkit-linear-gradient(bottom, "+ bodyColor+ " "+progress +"%, white 100%)";
         }
         if (status == "poor") {
             bodyColor = "red";
-            $('percentCorrect').removeClass("doingGood");
-            $('percentCorrect').removeClass("doingFair");
-            $('percentCorrect').addClass("doingPoor");
+            $('#percentCorrect').removeClass("doingGood");
+            $('#percentCorrect').removeClass("doingFair");
+            $('#percentCorrect').addClass("doingPoor");
             document.body.style.background = "-webkit-linear-gradient(bottom, "+ bodyColor+ " "+progress +"%, white 100%)";
             }
         }
@@ -756,10 +772,10 @@ function currentStatus() {
     if (percentCorrect >= 85){
         status = "good";
     }
-    if (percentCorrect < 85 && percentCorrect >= 80){
+    if (percentCorrect < 85 && percentCorrect >= 75){
        status = "fair";
     }
-    if (percentCorrect < 80){
+    if (percentCorrect < 75){
         status = "poor";    
         }
         return status;
