@@ -130,47 +130,24 @@ function createMathProblem(problemObj) {
             var variable = variableArray[randomIndex];
            
             if (radioType == "addsub"){
-                var signForOperation = Math.random();
-                if (signForOperation < .5 || radioType == "sub"){
-                    sign = " - ";
-                     num1 = Math.max(num1,num2);
-                     num2 = Math.min(num1,num2);
-                }
-                else if (signForOperation >= .5 || radioType == "add"){
-                    sign = " + ";
-                }
+                getAddSubMathProblem(problemObj, num1, num2, radioType, radioValue);
             }
             else if (radioType == "add"){
-                sign = " + ";
+                getAddMathProblem(problemObj, num1, num2);
             }
             else if (radioType == "sub"){
-                sign = " - ";
+                getSubMathProblem(problemObj, num1, num2, radioValue);
             }
             else if (radioType == "multdiv"){
-                var signForOperation = Math.random();
-                if (signForOperation < .5){
-                    sign = " / ";
-                    num1 = Math.max(num1,num2)+1;
-                    num2 = getFactors(num1);
-                }
-                else if (signForOperation >= .5 || radioType == "mult"){
-                    sign = " * ";
-                }
+                getMultDivMathProblem(problemObj, num1, num2, radioType);
             }
             else if (radioType == "mult"){
-                sign = " * ";
+                getMultMathProblem(problemObj, num1, num2);
             }
             else if (radioType == "div"){
-                sign = " / ";
-                num1 = Math.max(num1,num2)+1;
-                num2 = getFactors(num1);
+                getDivMathProblem(problemObj, num1, num2);
             }
                  
-                // var problem = (num1.toString()+" "+ sign +" "+ variable);
-                problemObj.num1 = num1;
-                problemObj.num2 = num2;
-                problemObj.sign = sign;
-                problemObj.problem = problem;
                 problemObj.variable = variable;
         
             } else {
@@ -185,49 +162,24 @@ function createMathProblem(problemObj) {
                  variable = variableArray[randomIndex];
 
                  if (radioType == "addsub"){
-                    signForOperation = Math.random();
-                    if (signForOperation < .5){
-                        sign = " - ";
-                         num1 = Math.max(num1,num2);
-                         num2 = Math.min(num1,num2);
-                    }
-                    else if (signForOperation >= .5){
-                        sign = " + ";
-                    }
+                    getAddSubMathProblem(problemObj, num1, num2, radioType, radioValue);
                 }
                 else if (radioType == "add"){
-                    sign = " + ";
+                    getAddMathProblem(problemObj, num1, num2);
                 }
                 else if (radioType == "sub"){
-                    sign = " - ";
-                    num1 = Math.max(num1,num2);
-                    num2 = Math.min(num1,num2);
+                    getSubMathProblem(problemObj, num1, num2, radioValue);
                 }
                 else if (radioType == "multdiv"){
-                    signForOperation = Math.random();
-                    if (signForOperation < .5){
-                        sign = " / ";
-                        num1 = Math.max(num1,num2)+1;
-                        num2 = getFactors(num1);
-                    }
-                    else if (signForOperation >= .5){
-                        sign = " * ";
-                    }
+                    getMultDivMathProblem(problemObj, num1, num2, radioType);
                 }
                 else if (radioType == "mult"){
-                    sign = " * ";
+                    getMultMathProblem(problemObj, num1, num2);
                 }
                 else if (radioType == "div"){
-                    sign = " / ";
-                    num1 = Math.max(num1,num2)+1;
-                    num2 = getFactors(num1);
+                    getDivMathProblem(problemObj, num1, num2);
                 }
                      
-                    problem = (num1.toString()+" "+ sign +" "+ variable);
-                    problemObj.num1 = num1;
-                    problemObj.num2 = num2;
-                    problemObj.sign = sign;
-                    problemObj.problem = problem;
                     problemObj.variable = variable;
                 }
         }       
@@ -284,7 +236,7 @@ function determineAnswer(problemObj){
             var standardAnswer = Number(problemObj.num1 / problemObj.num2);
             problem = (problemObj.num1.toString()+" "+ problemObj.sign +" "+ problemObj.variable +" = "+ standardAnswer.toString());
             problemObj.problem = problem;
-            correctAnswer = Number(standardAnswer * problemObj.num2);
+            correctAnswer = Number(problemObj.num2);
         }
         problemObj.correctAnswer = correctAnswer;
     
