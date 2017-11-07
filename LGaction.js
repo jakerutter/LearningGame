@@ -60,6 +60,7 @@ function createProblemObj(num1, num2, sign, problem, correctAnswer){
     this.correctAnswer = correctAnswer;
     this.variable = variable;
     }
+
 //Takes problem obj and calls the appropriate Math Function
 function createMathProblem(problemObj) {
     var radioValue = $("input[name='problemSize']:checked").val();
@@ -73,48 +74,24 @@ function createMathProblem(problemObj) {
     var correctAnswer;
 
     if (radioType == "addsub"){
-        var signForOperation = Math.random();
-        if (signForOperation < .5 || radioType == "sub"){
-            sign = "-";
-             num1 = Math.max(num1,num2);
-             num2 = Math.min(num1,num2);
-        }
-        else if (signForOperation >= .5 || radioType == "add"){
-            sign = "+";
-        }
+        getAddSubMathProblem(problemObj, num1, num2, radioType, radioValue);
     }
     else if (radioType == "add"){
-        sign = "+";
+        getAddMathProblem(problemObj, num1, num2);
     }
     else if (radioType == "sub"){
-        sign = "-";
+        getSubMathProblem(problemObj, num1, num2, radioValue);
     }
     else if (radioType == "multdiv"){
-        var signForOperation = Math.random();
-        if (signForOperation < .5){
-            sign = "/";
-            num1 = Math.max(num1,num2)+1;
-            num2 = getFactors(num1);
-        }
-        else if (signForOperation >= .5 || radioType == "mult"){
-            sign = "*";
-        }
+        getMultDivMathProblem(problemObj, num1, num2, radioType);
     }
     else if (radioType == "mult"){
-        sign = "*";
+        getMultMathProblem(problemObj, num1, num2);
     }
     else if (radioType == "div"){
-        sign = "/";
-        num1 = Math.max(num1,num2)+1;
-        num2 = getFactors(num1);
+        getDivMathProblem(problemObj, num1, num2)
     }
-         
-        var problem = (num1.toString()+ sign + num2.toString());
-        problemObj.num1 = num1;
-        problemObj.num2 = num2;
-        problemObj.sign = sign;
-        problemObj.problem = problem;
-
+//For problems where problem was not ""
     } else {
 
          num1 = getRandomInt(0, radioValue);
@@ -122,50 +99,24 @@ function createMathProblem(problemObj) {
          sign = "";
          correctAnswer;
          if (radioType == "addsub"){
-            signForOperation = Math.random();
-            if (signForOperation < .5){
-                sign = "-";
-                 num1 = Math.max(num1,num2);
-                 num2 = Math.min(num1,num2);
-            }
-            else if (signForOperation >= .5){
-                sign = "+";
-            }
+          getAddSubMathProblem(problemObj, num1, num2, radioType, radioValue);
         }
         else if (radioType == "add"){
-            sign = "+";
+           getAddMathProblem(problemObj, num1, num2);
         }
         else if (radioType == "sub"){
-            sign = "-";
-            num1 = Math.max(num1,num2);
-            num2 = Math.min(num1,num2);
+          getSubMathProblem(problemObj, num1, num2, radioValue);
         }
         else if (radioType == "multdiv"){
-            signForOperation = Math.random();
-            if (signForOperation < .5){
-                sign = "/";
-                num1 = Math.max(num1,num2)+1;
-                num2 = getFactors(num1);
-            }
-            else if (signForOperation >= .5){
-                sign = "*";
-            }
+           getMultDivMathProblem(problemObj, num1, num2, radioType);
         }
         else if (radioType == "mult"){
-            sign = "*";
+           getMultMathProblem(problemObj, num1, num2);
         }
         else if (radioType == "div"){
-            sign = "/";
-            num1 = Math.max(num1,num2)+1;
-            num2 = getFactors(num1);
-        }
-             
-            problem = (num1.toString()+ sign + num2.toString());
-            problemObj.num1 = num1;
-            problemObj.num2 = num2;
-            problemObj.sign = sign;
-            problemObj.problem = problem;
-        }
+           getDivMathProblem(problemObj, num1, num2);
+        }         
+    }
         return problemObj;
 
     } else {
@@ -181,36 +132,36 @@ function createMathProblem(problemObj) {
             if (radioType == "addsub"){
                 var signForOperation = Math.random();
                 if (signForOperation < .5 || radioType == "sub"){
-                    sign = "-";
+                    sign = " - ";
                      num1 = Math.max(num1,num2);
                      num2 = Math.min(num1,num2);
                 }
                 else if (signForOperation >= .5 || radioType == "add"){
-                    sign = "+";
+                    sign = " + ";
                 }
             }
             else if (radioType == "add"){
-                sign = "+";
+                sign = " + ";
             }
             else if (radioType == "sub"){
-                sign = "-";
+                sign = " - ";
             }
             else if (radioType == "multdiv"){
                 var signForOperation = Math.random();
                 if (signForOperation < .5){
-                    sign = "/";
+                    sign = " / ";
                     num1 = Math.max(num1,num2)+1;
                     num2 = getFactors(num1);
                 }
                 else if (signForOperation >= .5 || radioType == "mult"){
-                    sign = "*";
+                    sign = " * ";
                 }
             }
             else if (radioType == "mult"){
-                sign = "*";
+                sign = " * ";
             }
             else if (radioType == "div"){
-                sign = "/";
+                sign = " / ";
                 num1 = Math.max(num1,num2)+1;
                 num2 = getFactors(num1);
             }
@@ -236,38 +187,38 @@ function createMathProblem(problemObj) {
                  if (radioType == "addsub"){
                     signForOperation = Math.random();
                     if (signForOperation < .5){
-                        sign = "-";
+                        sign = " - ";
                          num1 = Math.max(num1,num2);
                          num2 = Math.min(num1,num2);
                     }
                     else if (signForOperation >= .5){
-                        sign = "+";
+                        sign = " + ";
                     }
                 }
                 else if (radioType == "add"){
-                    sign = "+";
+                    sign = " + ";
                 }
                 else if (radioType == "sub"){
-                    sign = "-";
+                    sign = " - ";
                     num1 = Math.max(num1,num2);
                     num2 = Math.min(num1,num2);
                 }
                 else if (radioType == "multdiv"){
                     signForOperation = Math.random();
                     if (signForOperation < .5){
-                        sign = "/";
+                        sign = " / ";
                         num1 = Math.max(num1,num2)+1;
                         num2 = getFactors(num1);
                     }
                     else if (signForOperation >= .5){
-                        sign = "*";
+                        sign = " * ";
                     }
                 }
                 else if (radioType == "mult"){
-                    sign = "*";
+                    sign = " * ";
                 }
                 else if (radioType == "div"){
-                    sign = "/";
+                    sign = " / ";
                     num1 = Math.max(num1,num2)+1;
                     num2 = getFactors(num1);
                 }
@@ -289,10 +240,10 @@ function determineAnswer(problemObj){
     var radioStyle = $("input[name='problemStyle']:checked").val();
     var correctAnswer = "";
     if (radioStyle == "Answer") {
-    if (problemObj.sign == "+"){
+    if (problemObj.sign == " + "){
         correctAnswer = Number(problemObj.num1+problemObj.num2);
     }
-    if (problemObj.sign == "-"){
+    if (problemObj.sign == " - "){
         if (problemObj.num1 > problemObj.num2){ 
             correctAnswer = Number(problemObj.num1-problemObj.num2);
         }
@@ -300,10 +251,10 @@ function determineAnswer(problemObj){
             correctAnswer = Number(problemObj.num2-problemObj.num1);
         }
     }
-    if (problemObj.sign == "*"){
+    if (problemObj.sign == " * "){
         correctAnswer = Number(problemObj.num1 * problemObj.num2);
     }
-    if (problemObj.sign == "/"){
+    if (problemObj.sign == " / "){
         correctAnswer = Number(problemObj.num1 / problemObj.num2);
     }
     problemObj.correctAnswer = correctAnswer;
@@ -311,25 +262,25 @@ function determineAnswer(problemObj){
     return problemObj;
     }
     else {
-        if (problemObj.sign == "+") {
+        if (problemObj.sign == " + ") {
             var standardAnswer = Number(problemObj.num1 + problemObj.num2);
             problem = (problemObj.num1.toString()+" "+ problemObj.sign +" "+ problemObj.variable +" = "+ standardAnswer.toString());
             problemObj.problem = problem;
             correctAnswer = Number(standardAnswer - problemObj.num1);
         }
-        if (problemObj.sign == "-"){
+        if (problemObj.sign == " - "){
             var standardAnswer = Number(problemObj.num1 - problemObj.num2);
             problem = (problemObj.num1.toString()+" "+ problemObj.sign +" "+ problemObj.variable +" = "+ standardAnswer.toString());
             problemObj.problem = problem;
             correctAnswer = Number(problemObj.num1 - standardAnswer);
         }
-        if (problemObj.sign == "*"){
+        if (problemObj.sign == " * "){
             var standardAnswer = Number(problemObj.num1 * problemObj.num2);
             problem = (problemObj.num1.toString()+" "+ problemObj.sign +" "+ problemObj.variable +" = "+ standardAnswer.toString());
             problemObj.problem = problem;
             correctAnswer = Number(standardAnswer / problemObj.num1);
         }
-        if (problemObj.sign == "/"){
+        if (problemObj.sign == " / "){
             var standardAnswer = Number(problemObj.num1 / problemObj.num2);
             problem = (problemObj.num1.toString()+" "+ problemObj.sign +" "+ problemObj.variable +" = "+ standardAnswer.toString());
             problemObj.problem = problem;
@@ -364,24 +315,53 @@ function populateAnswers(problemObj){
     var answer3 = correctAnswer + 2;
     var answer4 = correctAnswer + 3;
     var answer5 = correctAnswer + 4;
-
-    myAnswersArray = [answer2, answer3, answer4, answer5];
+    var answer6 = correctAnswer + 5;
+    var answer7 = correctAnswer + 6;
+    var answer8 = correctAnswer + 7;
+    var answer9 = correctAnswer + 8;
+    var answer10 = correctAnswer + 9;
+    var answer11 = correctAnswer + 10;
+    myAnswersArray = [answer2, answer3, answer4, answer5, answer6, answer7, answer8, answer9, answer10, answer11];
 
     if (correctAnswer >= 1){
-        var answer6 = correctAnswer - 1;
-        myAnswersArray.push(answer6);
+        var answer12 = correctAnswer - 1;
+        myAnswersArray.push(answer12);
     }
     if (correctAnswer >= 2){
-        var answer7 = correctAnswer - 2;
-        myAnswersArray.push(answer7);
+        var answer13 = correctAnswer - 2;
+        myAnswersArray.push(answer13);
     }
     if (correctAnswer >= 3){
-        var answer8 = correctAnswer - 3;
-        myAnswersArray.push(answer8);
+        var answer14 = correctAnswer - 3;
+        myAnswersArray.push(answer14);
     }
     if (correctAnswer >= 4){
-        var answer9 = correctAnswer - 4;
-        myAnswersArray.push(answer9);
+        var answer15 = correctAnswer - 4;
+        myAnswersArray.push(answer15);
+    }
+    if (correctAnswer >= 5){
+        var answer16 = correctAnswer - 5;
+        myAnswersArray.push(answer16);
+    }
+    if (correctAnswer >= 6){
+        var answer17 = correctAnswer - 6;
+        myAnswersArray.push(answer17);
+    }
+    if (correctAnswer >= 7){
+        var answer18 = correctAnswer - 7;
+        myAnswersArray.push(answer18);
+    }
+    if (correctAnswer >= 8){
+        var answer19 = correctAnswer - 8;
+        myAnswersArray.push(answer19);
+    }
+    if (correctAnswer >= 9){
+        var answer20 = correctAnswer - 9;
+        myAnswersArray.push(answer20);
+    }
+    if (correctAnswer >= 10){
+        var answer21 = correctAnswer - 10;
+        myAnswersArray.push(answer21);
     }
     
     var mySpanArray = ["Top", "Left", "Right", "Bottom"];
@@ -475,7 +455,7 @@ function compareSelection(problemObj, selection){
         document.getElementById(selection.id).classList.add('wrongAnswer');
         var isCorrect = false;
         getAnsweredSound(isCorrect);
-        document.getElementById("listWrongAnswers").innerHTML += (problemObj.problem + " ");
+        document.getElementById("listWrongAnswers").innerHTML += (problemObj.problem + " = " + problemObj.correctAnswer + ",");
     }
 
     questionsAnswered += 1;
@@ -536,49 +516,6 @@ function resetStyles(returnBool){
     return returnBool;
     };
 
-    //The maximum and the minimum is inclusive.
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-      }
-
-function add(problemObj){
-    problemObj.sign = "+";
-    return problemObj; 
-    }
-
-function subtract(problemObj){
-    problemObj.sign = "-";
-    problemObj.num1 = Math.max(problemObj.num1, problemObj.num2);
-    problemObj.num2 = Math.min(problemObj.num1, problemObj.num2);
-    return problemObj; 
-    }
-
-function multiply(problemObj){
-    problemObj.sign = "*";
-    return problemObj;
-    }
-
-function divide(problemObj){
-    problemObj.sign = "/";
-    problemObj.num1 = Math.max(problemObj.num1, problemObj.num2);
-    problemObj.num2 = Math.min(problemObj.num1, problemObj.num2);
-    var extra = problemObj.num1 % problemObj.num2;
-    problemObj.num2 -= extra;
-    return problemObj;
-    }
-
-function getFactors(num){
-    var factorArray = [];
-        for (i=1;i<=num;i++){
-            if (num % i == 0){
-                factorArray.push(i);
-            }
-        }
-        return factorArray[Math.floor(Math.random() * factorArray.length)];
-    }
-
 function preGame() {
     document.getElementById('welcomeModal').classList.remove('hidden');
     $("#welcomeModal").modal();
@@ -632,22 +569,14 @@ function showFinishedModal(globalCorrect, currentGoal, percentCorrect){
     }
     if (percentCorrect < 75){
         document.getElementById('finishedModal').classList.add("finishedPoor");
-        document.getElementById('finishedResult').innerHTML = ("Please try again. Your score was too low to pass.")
+        document.getElementById('finishedResult').innerHTML = ("Please try again. Your score was too low to pass.");
+    }
+    if (percentCorrect < 100) {
+        document.getElementById('confirmReview').classList.remove("hidden");
     }
     document.getElementById('EndMessageGoalSet').innerHTML = ("The goal you set was "+ currentGoal + ".");
     document.getElementById('EndMessageTotalAnswered').innerHTML = ("You answered "+ globalCorrect + " correct out of " + questionsAnswered + " attempted.");
-    document.getElementById('EndMessagePercentCorrect').innerHTML = ("You finished with "+ percentCorrect.toFixed(2) + "% correct.")
-
-    exit();
-
-    function exit(){
-        if (getElementById('finishedModal').classList.contains('hidden')) {
-            setTimeout(exit, 1000);   
-        }
-        else{
-            hideFinishedModal();   
-        }
-    }
+    document.getElementById('EndMessagePercentCorrect').innerHTML = ("You finished with "+ percentCorrect.toFixed(2) + "% correct.");
 }
 
 function hideFinishedModal(){
@@ -657,6 +586,24 @@ function hideFinishedModal(){
         document.getElementById('simplemodal-overlay').classList.add('behind');
         document.getElementById('simplemodal-container').classList.add('behind');
         window.location.reload(true);
+    }
+}
+
+function hideFinishedShowReview() {
+    if (currentGoal.innerHTML != ""){
+        document.getElementById('finishedModal').classList.add('hidden');
+        document.getElementById('finishedModal').classList.add('behind');
+
+        $("#reviewModal").modal();
+        document.getElementById('reviewModal').classList.remove('hidden');
+        document.getElementById('reviewModal').classList.add('table');
+        var reviewArray = document.getElementById('listWrongAnswers').innerHTML.split(",");
+        for(i=0; i < reviewArray.length-1; i+=2){
+            reviewProblemsLeft.innerHTML += "<li>" + reviewArray[i] + "</li>";
+        }
+        for(i=1; i < reviewArray.length-1; i+=2){
+            reviewProblemsRight.innerHTML += "<li>" + reviewArray[i] + "</li>";
+        }
     }
 }
 
@@ -780,3 +727,146 @@ function currentStatus() {
         }
         return status;
     }
+
+    //Math problems devised in order to refactor and increase modularity of math logic
+function getAddSubMathProblem(problemObj, num1, num2, radioType, radioValue) {
+        
+        var signForOperation = Math.random();
+        if (signForOperation < .5 || radioType == "sub"){
+             problemObj.sign = " - ";
+             num1 = Math.max(num1, num2);
+             num2 = Math.min(num1, num2);
+             if (num1 == num2){
+                 var newNumber = getRandomInt(0, radioValue);
+                 if (num1 > newNumber) {
+                     num2 = newNumber;
+                 }
+                 else {
+                     num2 = num1;
+                     num1 = newNumber;
+                 }
+             }
+        }
+        else if (signForOperation >= .5 || radioType == "add"){
+            problemObj.sign = " + ";
+        }
+
+        var problem = (num1.toString()+ problemObj.sign + num2.toString());
+        problemObj.num1 = num1;
+        problemObj.num2 = num2;
+        problemObj.problem = problem;
+
+        return problemObj;
+    }
+
+function getAddMathProblem(problemObj, num1, num2) {
+        problemObj.sign = " + ";
+        var problem = (num1.toString()+ problemObj.sign + num2.toString());
+        problemObj.num1 = num1;
+        problemObj.num2 = num2;
+        problemObj.problem = problem;
+
+        return problemObj;
+    }
+
+function getSubMathProblem(problemObj, num1, num2, radioValue) {
+        problemObj.sign = " - ";
+        num1 = Math.max(num1, num2);
+        num2 = Math.min(num1, num2);
+        if (num1 == num2){
+            var newNumber = getRandomInt(0, radioValue);
+            if (num1 > newNumber) {
+                num2 = newNumber;
+            }
+            else {
+                num2 = num1;
+                num1 = newNumber;
+            }
+        }
+        var problem = (num1.toString() + problemObj.sign + num2.toString());
+        problemObj.problem = problem;
+        problemObj.num1 = num1;
+        problemObj.num2 = num2;
+        return problemObj;
+    }
+
+function getMultDivMathProblem(problemObj, num1, num2, radioType) {
+        var signForOperation = Math.random();
+        if (signForOperation < .5){
+            problemObj.sign = " / ";
+            num1 = Math.max(num1,num2)+1;
+            num2 = getFactors(num1);
+            var problem = (num1.toString() + problemObj.sign + num2.toString());
+                }
+        else if (signForOperation >= .5 || radioType == "mult"){
+            problemObj.sign = " * ";
+            var problem = (num1.toString() + problemObj.sign + num2.toString());
+        }
+        problemObj.num1 = num1;
+        problemObj.num2 = num2;
+        problemObj.problem = problem;
+        return problemObj;
+    }
+
+function getMultMathProblem(problemObj, num1, num2) {
+        problemObj.sign = " * ";
+        var problem = (num1.toString() + problemObj.sign + num2.toString());
+        problemObj.num1 = num1;
+        problemObj.num2 = num2;
+        problemObj.problem = problem;
+
+        return problemObj;
+    }
+
+function getDivMathProblem(problemObj, num1, num2) {
+        var sign = " / ";
+        num1 = Math.max(num1, num2);
+        num2 = getFactors(num1);
+
+        if((num1 == num2 && (isPrimeNumber(num1) == false))) {
+            num2 = getFactors(num1);
+        }
+        if((num2 == 1 && (isPrimeNumber(num1) == false))) {
+            num2 = getFactors(num1);
+        }
+
+        problemObj.sign = sign;
+        problemObj.num1 = num1;
+        problemObj.num2 = num2;
+        var problem = (num1.toString() + problemObj.sign + num2.toString());
+        problemObj.problem = problem;
+
+        return problemObj;
+    }
+
+    //UTILITY FUNCTIONS. IsPrimeNumber. getFactors. getRandomInt.
+function isPrimeNumber(value) {
+    for(var i = 2; i < value; i++) {
+        if(value % i === 0) {
+            return false;
+            }
+        }
+        return true;
+    }
+
+function getFactors(num){
+    var factorArray = [];
+        for (i=1;i<=num;i++){
+            if (num % i == 0){
+                factorArray.push(i);
+                }
+            }
+            if (isPrimeNumber(num) == false){
+                factorArray.splice(factorArray.length-1,1);
+                factorArray.splice(0,1);
+            }
+            return factorArray[Math.floor(Math.random() * factorArray.length)];
+        }
+
+        //The max and the min are inclusive in this function
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+        

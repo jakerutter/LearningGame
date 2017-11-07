@@ -145,6 +145,23 @@ body{
     border-radius: 5px;
 }
 
+.expandingModal {
+    width: 450px;
+    height: 330px;
+    /* overflow: hidden; */
+    background-color: mediumaquamarine;
+    border: black 2px solid;
+    border-radius: 5px;
+}
+
+.table {
+    display: table;
+}
+
+.clear {
+    clear: both; 
+ }
+
 .center {
     margin: auto;
     position: absolute;
@@ -193,6 +210,14 @@ body{
 .finishedPoor {
     background-color: red;
     color: black;
+}
+
+.reviewProblems {
+    text-align: left;
+    display: inline-block;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-size: 18px;
 }
 
 /* .bodyBackgroundGood {
