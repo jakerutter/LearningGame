@@ -223,7 +223,7 @@ function createMathProblem(problemObj) {
                     num2 = getFactors(num1);
                 }
                      
-                    // problem = (num1.toString()+" "+ sign +" "+ variable);
+                    problem = (num1.toString()+" "+ sign +" "+ variable);
                     problemObj.num1 = num1;
                     problemObj.num2 = num2;
                     problemObj.sign = sign;
@@ -429,6 +429,7 @@ function replaceValuesInButton(place,value){
     }
 
 function compareSelection(problemObj, selection){
+    var radioStyle = $("input[name='problemStyle']:checked").val();
     var selectedAnswer = selection.innerHTML;
     var correctCount = parseInt($('#correctCounter').text());
     var questionsAnswered = parseInt($('#questionsAnswered').text());
@@ -455,7 +456,12 @@ function compareSelection(problemObj, selection){
         document.getElementById(selection.id).classList.add('wrongAnswer');
         var isCorrect = false;
         getAnsweredSound(isCorrect);
+        if (radioStyle == "Answer"){
         document.getElementById("listWrongAnswers").innerHTML += (problemObj.problem + " = " + problemObj.correctAnswer + ",");
+        }
+        else {
+            document.getElementById("listWrongAnswers").innerHTML += ("(" + problemObj.problem + ") " + problemObj.variable + " = " + problemObj.correctAnswer + ",");
+        }
     }
 
     questionsAnswered += 1;
@@ -555,6 +561,7 @@ function goalMet(globalCorrect, currentGoal, percentCorrect, questionsAnswered){
         }
 
 function showFinishedModal(globalCorrect, currentGoal, percentCorrect){
+
     var questionsAnswered = document.getElementById('questionsAnswered').innerHTML;
     document.getElementById('finishedModal').classList.remove('hidden');
     $("#finishedModal").modal();
