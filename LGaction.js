@@ -254,6 +254,7 @@ function determineAnswer(problemObj){
     } else {
         correctAnswer = Number(problemObj.num1*problemObj.num2);
         problemObj.correctAnswer = correctAnswer;
+        document.getElementById('ttCorrectAnswer').innerHTML = correctAnswer;
         return problemObj;
             }
         }
@@ -412,6 +413,12 @@ function compareSelection(problemObj, selection){
     var percentCorrect = parseInt($('#percentCorrect').text());
     var globalCorrect = parseInt($('#globalCorrect').text());
     var currentGoal = parseInt($('#currentGoal').text());
+    var ttCorrectAnswer = parseInt($('#ttCorrectAnswer').text());
+
+    //This is to fix the bug where the first TT problemObj.correctAnswer was wrong.
+    if ((radioStyle == "TimesTable") && (problemObj.correctAnswer != ttCorrectAnswer)) {
+        problemObj.correctAnswer = ttCorrectAnswer;
+    }
 
     if (selectedAnswer == problemObj.correctAnswer){
         document.getElementById("labelResults").innerHTML = "You are correct!";
@@ -433,10 +440,13 @@ function compareSelection(problemObj, selection){
         var isCorrect = false;
         getAnsweredSound(isCorrect);
         if (radioStyle == "Answer"){
-        document.getElementById("listWrongAnswers").innerHTML += (problemObj.problem + " = " + problemObj.correctAnswer + ",");
+            document.getElementById("listWrongAnswers").innerHTML += (problemObj.problem + " = " + problemObj.correctAnswer + ",");
         }
-        else {
+        else if (radioStyle == "Number") {
             document.getElementById("listWrongAnswers").innerHTML += ("(" + problemObj.problem + ") " + problemObj.variable + " = " + problemObj.correctAnswer + ",");
+        }
+        else if (radioStyle == "TimesTable"){
+            document.getElementById("listWrongAnswers").innerHTML += (problemObj.problem + " = " + problemObj.correctAnswer + ",");
         }
     }
 
