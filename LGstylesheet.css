@@ -1,21 +1,23 @@
-
-body{
-    /* background-color: white; */
+html {
     height: 100%;
+  }
+
+body {
+    min-height: 100%;
     text-align: center;
-    }
+  }
 
-#wholeWrapper {
-    /* background-color:white; */
-    /* display: inline-block; */
-    height: 50em;
+/* .simplemodal-wrap {
+    min-height: 100%;
+}
 
-    }
+.simplemodal-container {
+    min-height: 100%;
+} */
 
 .lane {
     display: inline-block;
     vertical-align: top;
-    /* background-color: white; */
     height: auto;
 }
 
@@ -32,14 +34,12 @@ body{
 
 .row {
   display: inline-block;
-  /* background-color: white; */
   width: 50em;
   height: 10em;
 }
 
 .miniRow {
   display: inline-block;
-  /* background-color: white; */
   margin:auto;
   height: 2em;
 
@@ -51,14 +51,11 @@ body{
   height: 10em;
   text-align: center;
   vertical-align: middle;
-  /* line-height: 10em; */
   opacity: 1;
 }
 
 .question {
-    /* background-color: white; */
     color: blue;
-    /* vertical-align: middle;  */
     font-size: 1em;
     opacity: 1;
 }
@@ -72,7 +69,6 @@ body{
 .answerOption {
     background-color: mediumaquamarine;
     color: black;
-    /* vertical-align: middle;  */
     font-size: 1em;
     font-style: bold;
     opacity: 1;
@@ -148,10 +144,19 @@ body{
 .expandingModal {
     width: 450px;
     height: 330px;
-    /* overflow: hidden; */
     background-color: mediumaquamarine;
     border: black 2px solid;
     border-radius: 5px;
+}
+
+#textBoxModal {
+    text-align: left;
+    padding-left: 100px;
+    padding-top: 5px;
+}
+
+.textBox {
+    width: 25px;
 }
 
 .table {

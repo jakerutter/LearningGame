@@ -1,22 +1,30 @@
-
+if ($("input[name='problemStyle']:checked").val() == "TimesTable"){
+    document.getElementById('NumberSizeDiv').classList.add('hidden');
+    document.getElementById('TypeOfProblemDiv').classList.add('hidden');
+}
 
 //This function is the outermost function.
 function PlayMathGame(){
     if (currentGoal.innerHTML == ""){
         preGame();
+        if ($("input[name='problemStyle']:checked").val() == "TimesTable"){
+            preTTGame();
+        }
     }
+    
         var returnBool;
 
        if (labelResults.innerHTML != ""){
            var didBoolReturn = resetStyles(returnBool); 
        }
        if (labelResults.innerHTML == "" || didBoolReturn){
-        if (document.getElementById('correctCounter') > 0){
+        if (document.getElementById('correctCounter').innerHTML > 0){
             var currentScore = document.getElementById('correctCounter').value;
         }
         
-        problemObj = new createMathProblem(0,0,"","",0,"");
-        
+        // problemObj = new createMathProblem(0,0,"","",0,"");
+        var problemObj = new createProblemObj(0,0,"","",0,"");
+
         createMathProblem(problemObj);
         determineAnswer(problemObj);
         populateMathProblem(problemObj);
@@ -52,7 +60,7 @@ function PlayMathGame(){
     }};
 
 //functions
-function createProblemObj(num1, num2, sign, problem, correctAnswer){
+function createProblemObj(num1, num2, sign, problem, correctAnswer, variable){
     this.num1 = num1;
     this.num2 = num2;
     this.sign = sign;
@@ -91,7 +99,7 @@ function createMathProblem(problemObj) {
     else if (radioType == "div"){
         getDivMathProblem(problemObj, num1, num2)
     }
-//For problems where problem was not ""
+    //For problems where problem was not ""
     } else {
 
          num1 = getRandomInt(0, radioValue);
@@ -119,7 +127,7 @@ function createMathProblem(problemObj) {
     }
         return problemObj;
 
-    } else {
+    } else if(radioStyle == "Number") {
         if (problemObj.problem = ""){
             var num1 = getRandomInt(0, radioValue);
             var num2 = getRandomInt(0, radioValue);
@@ -182,7 +190,11 @@ function createMathProblem(problemObj) {
                      
                     problemObj.variable = variable;
                 }
-        }       
+        }   else {
+            var multiple = document.getElementById('ttMultiple').innerHTML;
+            var upperLimit = document.getElementById('ttUpperMultiple').innerHTML;
+            getTimesTableProblem(problemObj, multiple, upperLimit);
+        }    
         return problemObj;
     }
 
@@ -210,10 +222,9 @@ function determineAnswer(problemObj){
         correctAnswer = Number(problemObj.num1 / problemObj.num2);
     }
     problemObj.correctAnswer = correctAnswer;
-
     return problemObj;
     }
-    else {
+    else if (radioStyle == "Number"){
         if (problemObj.sign == " + ") {
             var standardAnswer = Number(problemObj.num1 + problemObj.num2);
             problem = (problemObj.num1.toString()+" "+ problemObj.sign +" "+ problemObj.variable +" = "+ standardAnswer.toString());
@@ -239,14 +250,22 @@ function determineAnswer(problemObj){
             correctAnswer = Number(problemObj.num2);
         }
         problemObj.correctAnswer = correctAnswer;
-    
         return problemObj;
-    }
+    } else {
+        correctAnswer = Number(problemObj.num1*problemObj.num2);
+        problemObj.correctAnswer = correctAnswer;
+        return problemObj;
+            }
         }
 
 //Function that will take the generated math problem and place it
 //into the questionArea button.
 function populateMathProblem(problemObj){
+    var multiple = document.getElementById('ttMultiple').innerHTML;
+    var radioStyle = $("input[name='problemStyle']:checked").val();
+    if ((radioStyle == "TimesTable")&& (multiple == "")){
+        return;
+    }
     var span = document.getElementById("questionArea");
     if(span.firstChild) {
         span.removeChild(span.firstChild);
@@ -255,12 +274,17 @@ function populateMathProblem(problemObj){
             }
     else {
         span.appendChild(document.createTextNode(problemObj.problem.toString()));
-    }
+        }
     }
 
 //Function that will for correct answers and false answers and
 //place them into the answerOption areas.
 function populateAnswers(problemObj){
+    var multiple = document.getElementById('ttMultiple').innerHTML;
+    var radioStyle = $("input[name='problemStyle']:checked").val();
+    if ((radioStyle == "TimesTable")&& (multiple == "")){
+        return;
+    }
     var myAnswersArray = [];
     var correctAnswer = problemObj.correctAnswer;
     var answer2 = correctAnswer + 1;
@@ -363,7 +387,7 @@ function numberPlacement(placementObj) {
         counter -= 1;
         placementObj.placesForNumbers = mySpanArray;
         placementObj.possibleAnswers = myAnswersArray;
-    }
+        }
     return placementObj;    
     }
 
@@ -377,7 +401,7 @@ function replaceValuesInButton(place,value){
             }
     else {
         thisPlace.appendChild(document.createTextNode(value.toString()));
-    }
+        }
     }
 
 function compareSelection(problemObj, selection){
@@ -442,35 +466,35 @@ function resetStyles(returnBool){
     if((document.getElementById('Top')).classList.contains('correctAnswer')) {
         document.getElementById('Top').classList.remove('correctAnswer');
         returnBool = true;
-    }
+        }
     if(document.getElementById('Top').classList.contains('wrongAnswer')) {
         document.getElementById('Top').classList.remove('wrongAnswer');
         returnBool = true;
-    }
+        }
     if(document.getElementById('Left').classList.contains('correctAnswer')) {
         document.getElementById('Left').classList.remove('correctAnswer');
         returnBool = true;
-    }
+        }
     if(document.getElementById('Left').classList.contains('wrongAnswer')) {
         document.getElementById('Left').classList.remove('wrongAnswer');
         returnBool = true;
-    }
+        }
     if(document.getElementById('Right').classList.contains('correctAnswer')) {
         document.getElementById('Right').classList.remove('correctAnswer');
         returnBool = true;
-    }
+        }
     if(document.getElementById('Right').classList.contains('wrongAnswer')) {
         document.getElementById('Right').classList.remove('wrongAnswer');
         returnBool = true;
-    }
+        }
     if(document.getElementById('Bottom').classList.contains('correctAnswer')) {
         document.getElementById('Bottom').classList.remove('correctAnswer');
         returnBool = true;
-    }
+        }
     if(document.getElementById('Bottom').classList.contains('wrongAnswer')) {
         document.getElementById('Bottom').classList.remove('wrongAnswer');
         returnBool = true;
-    }
+        }
     return returnBool;
     };
 
@@ -489,8 +513,67 @@ function preGame() {
             setTimeout(loop, 1000);   
         }
       currentGoal.innerHTML = goal;
+            }
+        }
+
+function preTTGame(){
+    if (currentGoal.innerHTML == "") {
+        preGame();
+    }else{
+    document.getElementById("timesTableModal").classList.remove("hidden");
+    $("#timesTablesModal").modal();
+    // document.getElementById('simplemodal-overlay').classList.add('behind');
+    // document.getElementById('simplemodal-container').classList.add('behind');
+    // document.getElementById('simplemodal-overlay').classList.add('hidden');
+    // document.getElementById('simplemodal-container').classList.add('hidden');
+    loopy();
+
+    function loopy(){
+        var ttMultiple = document.getElementById('multipleValue').value;
+        var ttUpperLimit = document.getElementById('upperValue').value;
+        if (checkTTValues(ttMultiple, ttUpperLimit) == true) {
+            document.getElementById('ttMultiple').innerHTML = ttMultiple;
+            document.getElementById('ttUpperMultiple').innerHTML = ttUpperLimit;
+        }
+        else{
+            setTimeout(loopy, 1000);   
+                   }
+                }
+            }
+        }
+            
+        
+
+function hideTimesTableModal() {
+    var ttMultiple = document.getElementById('multipleValue').value;
+    var ttUpperLimit = document.getElementById('upperValue').value;
+
+    if (checkTTValues(ttMultiple, ttUpperLimit) == true) {
+    
+    document.getElementById('ttMultiple').innerHTML = ttMultiple;
+    document.getElementById('ttUpperMultiple').innerHTML = ttUpperLimit;
+
+    document.getElementById('timesTableModal').classList.add('hidden');
+    document.getElementById('timesTableModal').classList.add('behind');
+    document.getElementById('simplemodal-overlay').classList.add('behind');
+    document.getElementById('simplemodal-container').classList.add('behind');
+      
+        } else {
+            document.getElementById('ttAlert').innerHTML = "Please Enter Only Whole Numbers";
+        }
+        PlayMathGame();
     }
-}
+
+function checkTTValues(ttMultiple, ttUpperLimit) {
+    ttMultiple = ttMultiple.trim();
+    ttUpperLimit = ttUpperLimit.trim();
+    if ((ttMultiple != "") && (ttUpperLimit != "")){
+        return true;
+    }
+    else {
+        return false;
+        }
+    }
 
 function hideWelcomeModal(name) {
     if (currentGoal.innerHTML != ""){
@@ -498,8 +581,8 @@ function hideWelcomeModal(name) {
     document.getElementById('welcomeModal').classList.add('behind');
     document.getElementById('simplemodal-overlay').classList.add('behind');
     document.getElementById('simplemodal-container').classList.add('behind');
+        }
     }
-}
 
 function goalMet(globalCorrect, currentGoal, percentCorrect, questionsAnswered){
     if (currentGoal != "None"){
@@ -521,22 +604,22 @@ function showFinishedModal(globalCorrect, currentGoal, percentCorrect){
         document.getElementById('finishedModal').classList.add("finishedGood");
         document.getElementById('finishedResult').innerHTML = ("PASSED with flying colors!");
 
-    }
+        }
     if (percentCorrect < 85 && percentCorrect >= 75){
         document.getElementById('finishedModal').classList.add("finishedFair");
         document.getElementById('finishedResult').innerHTML = ("You passed with a fair grade.");
-    }
+        }
     if (percentCorrect < 75){
         document.getElementById('finishedModal').classList.add("finishedPoor");
         document.getElementById('finishedResult').innerHTML = ("Please try again. Your score was too low to pass.");
-    }
+        }
     if (percentCorrect < 100) {
         document.getElementById('confirmReview').classList.remove("hidden");
-    }
+        }
     document.getElementById('EndMessageGoalSet').innerHTML = ("The goal you set was "+ currentGoal + ".");
     document.getElementById('EndMessageTotalAnswered').innerHTML = ("You answered "+ globalCorrect + " correct out of " + questionsAnswered + " attempted.");
     document.getElementById('EndMessagePercentCorrect').innerHTML = ("You finished with "+ percentCorrect.toFixed(2) + "% correct.");
-}
+    }
 
 function hideFinishedModal(){
     if (currentGoal.innerHTML != ""){
@@ -545,8 +628,8 @@ function hideFinishedModal(){
         document.getElementById('simplemodal-overlay').classList.add('behind');
         document.getElementById('simplemodal-container').classList.add('behind');
         window.location.reload(true);
+        }
     }
-}
 
 function hideFinishedShowReview() {
     if (currentGoal.innerHTML != ""){
@@ -562,9 +645,9 @@ function hideFinishedShowReview() {
         }
         for(i=1; i < reviewArray.length-1; i+=2){
             reviewProblemsRight.innerHTML += "<li>" + reviewArray[i] + "</li>";
+            }
         }
     }
-}
 
 function changeStyling(percentCorrect, questionsAnswered) {
 
@@ -594,10 +677,10 @@ function changeStyling(percentCorrect, questionsAnswered) {
             document.getElementById('percentCorrect').classList.remove('doingFair');
         }
             document.getElementById('percentCorrect').classList.add('doingPoor');
+        }
     }
-}
 
-//retrieve appropriate sound when game is completed.
+//function will retrieve appropriate sound when game is completed.
 function getFinishedSound(status) {
     var soundList = [1,2,3];
     var chosenSound = soundList[Math.floor(Math.random() * soundList.length)];
@@ -620,10 +703,10 @@ function getFinishedSound(status) {
         }
         if (chosenSound == 3){
             document.getElementById('failed3').play();
-        }
+            }
         
+        }
     }
-}
 
 function getAnsweredSound(isCorrect) {
     if (isCorrect == true) {
@@ -631,9 +714,9 @@ function getAnsweredSound(isCorrect) {
     }
     else {
         document.getElementById('wrongSound').play();
-    }
-}
-//retrieve sound when a question is answered
+        }
+    }   
+    //retrieve sound when a question is answered
 
 //Function will take the currentGoal and questionsAnswered values as parameters and 
 //use these values to update and style a progression chart displayed on the page.
@@ -798,7 +881,28 @@ function getDivMathProblem(problemObj, num1, num2) {
         return problemObj;
     }
 
-    //UTILITY FUNCTIONS. IsPrimeNumber. getFactors. getRandomInt.
+function getTimesTableProblem(problemObj, multiple, upperLimit) {
+    var multiple = Number(multiple);
+    var upperLimit = Number(upperLimit);
+    var multipleArray = [];
+    if (multiple == ""){
+        preTTGame();
+    }else {
+    for (var i = multiple; i < upperLimit; i += multiple){
+        multipleArray.push(i);
+        }
+    var num2 = multipleArray[Math.floor(Math.random() * multipleArray.length)];
+    problemObj.sign = " * ";
+    problemObj.num1 = multiple;
+    problemObj.num2 = num2;
+
+    var problem = (multiple.toString() + problemObj.sign + problemObj.num2.toString());
+    problemObj.problem = problem;
+    }
+    return problemObj;
+    }
+
+//UTILITY FUNCTIONS. IsPrimeNumber. getFactors. getRandomInt.
 function isPrimeNumber(value) {
     for(var i = 2; i < value; i++) {
         if(value % i === 0) {

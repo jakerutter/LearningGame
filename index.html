@@ -15,14 +15,24 @@
 <div id="leftLane" class="lane">
     <div class="statWrapper">
         <h2 class="statTitle">Game Settings</h2>
-        <div class="statPlaceholderText">How large do you want the numbers?
+
+        <div class="statPlaceholderText">Standard Math Problems, Simple Equations, or Times Tables?
+            <form action="" class="radioButton">
+                <input type="radio" name="problemStyle" value="Answer" checked="checked" >Standard Math Problem<br>
+                <input type="radio" name="problemStyle" value="Number" >Simple Equation<br>
+                <input type="radio" name="problemStyle" value="TimesTable" >Times Tables<br>
+              </form>
+        </div>
+
+        <div id="NumberSizeDiv" class="statPlaceholderText">How large do you want the numbers?
             <form action="" class="radioButton">
                 <input type="radio" name="problemSize" value="10" checked="checked" > 10 and Smaller<br>
                 <input type="radio" name="problemSize" value="20" > 20 and Smaller<br>
                 <input type="radio" name="problemSize" value="100" > 100 and Smaller
               </form>
         </div>
-        <div class="statPlaceholderText">What type of math problems?
+
+        <div id="TypeOfProblemDiv" class="statPlaceholderText">What type of math problems?
             <form action="" class="radioButton">
                 <input type="radio" name="problemType" value="addsub" checked="checked"> Addition and Subtraction<br>
                 <input type="radio" name="problemType" value="add"> Addition<br>
@@ -32,12 +42,7 @@
                 <input type="radio" name="problemType" value="div"> Division
               </form>
         </div>
-        <div class="statPlaceholderText">Find Answer or Find Missing Number?
-            <form action="" class="radioButton">
-                <input type="radio" name="problemStyle" value="Answer" checked="checked" >Find Answer<br>
-                <input type="radio" name="problemStyle" value="Number" >Find Missing Number
-              </form>
-        </div>
+        
     </div>
 </div>
 
@@ -92,6 +97,18 @@
         <button id="confirmGoal" onclick="hideWelcomeModal()">Play!</button>
 </div>
 
+<div id="timesTableModal" class="modal center hidden"><h1>Times Table Practice</h1>
+    <div><h3 id="ttAlert">... ... ... ... ...</h3></div>
+        <form action="" id="textBoxModal">
+            <input type="text" name="multipleValue" class="textBox" id="multipleValue"
+                onkeypress="if (isNaN( String.fromCharCode(event.keyCode))) return false;"> What Number<br>
+            <input type="text" name="upperValue" class="textBox" id="upperValue"
+                onkeypress="if (isNaN( String.fromCharCode(event.keyCode))) return false;"> Up to what multiple?<br>
+          </form>
+        <div><h5>Hint: times tables for 5s, with multiple of 5 would allow for 0 * 5 up to 5 * 5.</h5></div>
+        <button id="confirmTimesTable" onclick="hideTimesTableModal()">Continue</button>
+</div>
+
 <div id="finishedModal" class="modal center hidden"><h1>You have finished!</h1>
     <div><h3 id="finishedResult"></h3></div>
         <div><h5 id= "EndMessageGoalSet"></h5></div>
@@ -115,7 +132,8 @@
 <div id="questionsAnswered" class="hidden">0</div>
 <div id="globalCorrect" class="hidden">0</div>
 <div id="listWrongAnswers" class="hidden"></div>
-
+<div id="ttMultiple" class="hidden"></div>
+<div id="ttUpperMultiple" class="hidden"></div>
 
 <script type="text/javascript" src="jquery-3.1.1.js"></script>
 <script type="text/javascript" src="jquery.simplemodal-1.4.4.js"></script>
