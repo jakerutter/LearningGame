@@ -1,16 +1,8 @@
-// if ($("input[name='problemStyle']:checked").val() == "TimesTable"){
-//     document.getElementById('NumberSizeDiv').classList.add('hidden');
-//     document.getElementById('TypeOfProblemDiv').classList.add('hidden');
-// }
-//^above is a failed attempt at hiding divs if Times Table is selected.
 
 //This function is the outermost function.
 function PlayMathGame(){
     if (currentGoal.innerHTML == ""){
         preGame();
-        if ($("input[name='problemStyle']:checked").val() == "TimesTable"){
-            preTTGame();
-        }
     }
         var returnBool;
 
@@ -69,6 +61,17 @@ function setGoal() {
     var goal;
     goal = $("input[name='goalValue']:checked").val();
     currentGoal.innerHTML = goal;
+    }
+function hideWelcomeModal(name) {
+    if (currentGoal.innerHTML != ""){
+    document.getElementById('welcomeModal').classList.add('hidden');
+    document.getElementById('welcomeModal').classList.add('behind');
+    document.getElementById('simplemodal-overlay').classList.add('behind');
+    document.getElementById('simplemodal-container').classList.add('behind');
+    if ($("input[name='problemStyle']:checked").val() == "TimesTable"){
+        preTTGame();
+            }
+        }
     }
 function preTTGame(){
     if (currentGoal.innerHTML == "") {
@@ -578,14 +581,7 @@ function checkTTValues(ttMultiple, ttUpperLimit) {
         }
     }
 
-function hideWelcomeModal(name) {
-    if (currentGoal.innerHTML != ""){
-    document.getElementById('welcomeModal').classList.add('hidden');
-    document.getElementById('welcomeModal').classList.add('behind');
-    document.getElementById('simplemodal-overlay').classList.add('behind');
-    document.getElementById('simplemodal-container').classList.add('behind');
-        }
-    }
+
 
 function goalMet(globalCorrect, currentGoal, percentCorrect, questionsAnswered){
     if (currentGoal != "None"){
