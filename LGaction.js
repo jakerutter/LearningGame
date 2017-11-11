@@ -898,7 +898,7 @@ function getTimesTableProblem(problemObj, multiple, upperLimit) {
     if (multiple == ""){
         preTTGame();
     }else {
-    for (var i = multiple; i < upperLimit; i += multiple){
+    for (var i = 0; i <= upperLimit; i += 1){
         multipleArray.push(i);
         }
     var num2 = multipleArray[Math.floor(Math.random() * multipleArray.length)];
@@ -906,7 +906,7 @@ function getTimesTableProblem(problemObj, multiple, upperLimit) {
     problemObj.num1 = multiple;
     problemObj.num2 = num2;
 
-    var problem = (multiple.toString() + problemObj.sign + problemObj.num2.toString());
+    var problem = (multiple.toString() + problemObj.sign + num2.toString());
     problemObj.problem = problem;
     }
     return problemObj;
