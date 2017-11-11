@@ -87,11 +87,11 @@
 <div id="welcomeModal" class="modal center hidden"><h1>Welcome student!</h1>
     <div><h3>Set your goal for this round.</h3></div>
         <form action="" class="goalRadio">
-            <input type="radio" name="goalValue" value="None">Set no goal<br>
-            <input type="radio" name="goalValue" value="10"> 10  math problems<br>
-            <input type="radio" name="goalValue" value="25"> 25 math problems<br>
-            <input type="radio" name="goalValue" value="50"> 50 math problems<br>
-            <input type="radio" name="goalValue" value="100"> 100 math problems<br>
+            <input type="radio" name="goalValue" value="None" onclick="setGoal()">Set no goal<br>
+            <input type="radio" name="goalValue" value="10"  onclick="setGoal()"> 10  math problems<br>
+            <input type="radio" name="goalValue" value="25"  onclick="setGoal()"> 25 math problems<br>
+            <input type="radio" name="goalValue" value="50"  onclick="setGoal()"> 50 math problems<br>
+            <input type="radio" name="goalValue" value="100" onclick="setGoal()"> 100 math problems<br>
           </form>
         <div><h4>You must pass with a % of 75 or higher to complete the goal.</h4></div>
         <button id="confirmGoal" onclick="hideWelcomeModal()">Play!</button>

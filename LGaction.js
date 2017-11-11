@@ -1,7 +1,8 @@
-if ($("input[name='problemStyle']:checked").val() == "TimesTable"){
-    document.getElementById('NumberSizeDiv').classList.add('hidden');
-    document.getElementById('TypeOfProblemDiv').classList.add('hidden');
-}
+// if ($("input[name='problemStyle']:checked").val() == "TimesTable"){
+//     document.getElementById('NumberSizeDiv').classList.add('hidden');
+//     document.getElementById('TypeOfProblemDiv').classList.add('hidden');
+// }
+//^above is a failed attempt at hiding divs if Times Table is selected.
 
 //This function is the outermost function.
 function PlayMathGame(){
@@ -11,7 +12,6 @@ function PlayMathGame(){
             preTTGame();
         }
     }
-    
         var returnBool;
 
        if (labelResults.innerHTML != ""){
@@ -60,6 +60,42 @@ function PlayMathGame(){
     }};
 
 //functions
+function preGame() {
+    document.getElementById('welcomeModal').classList.remove('hidden');
+    $("#welcomeModal").modal();
+        }
+
+function setGoal() {
+    var goal;
+    goal = $("input[name='goalValue']:checked").val();
+    currentGoal.innerHTML = goal;
+    }
+function preTTGame(){
+    if (currentGoal.innerHTML == "") {
+        preGame();
+    }else{
+    document.getElementById("timesTableModal").classList.remove("hidden");
+    $("#timesTablesModal").modal();
+    // document.getElementById('simplemodal-overlay').classList.add('behind');
+    // document.getElementById('simplemodal-container').classList.add('behind');
+    // document.getElementById('simplemodal-overlay').classList.add('hidden');
+    // document.getElementById('simplemodal-container').classList.add('hidden');
+    loopy();
+
+    function loopy(){
+        var ttMultiple = document.getElementById('multipleValue').value;
+        var ttUpperLimit = document.getElementById('upperValue').value;
+        if (checkTTValues(ttMultiple, ttUpperLimit) == true) {
+            document.getElementById('ttMultiple').innerHTML = ttMultiple;
+            document.getElementById('ttUpperMultiple').innerHTML = ttUpperLimit;
+        }
+        else{
+            setTimeout(loopy, 1000);   
+                   }
+                }
+            }
+        }
+            
 function createProblemObj(num1, num2, sign, problem, correctAnswer, variable){
     this.num1 = num1;
     this.num2 = num2;
@@ -508,50 +544,7 @@ function resetStyles(returnBool){
     return returnBool;
     };
 
-function preGame() {
-    document.getElementById('welcomeModal').classList.remove('hidden');
-    $("#welcomeModal").modal();
 
-    var goal;
-    loop();
-
-    function loop(){
-        if ($("input[name='goalValue']:checked").length > 0) {
-            goal = $("input[name='goalValue']:checked").val();
-        }
-        else{
-            setTimeout(loop, 1000);   
-        }
-      currentGoal.innerHTML = goal;
-            }
-        }
-
-function preTTGame(){
-    if (currentGoal.innerHTML == "") {
-        preGame();
-    }else{
-    document.getElementById("timesTableModal").classList.remove("hidden");
-    $("#timesTablesModal").modal();
-    // document.getElementById('simplemodal-overlay').classList.add('behind');
-    // document.getElementById('simplemodal-container').classList.add('behind');
-    // document.getElementById('simplemodal-overlay').classList.add('hidden');
-    // document.getElementById('simplemodal-container').classList.add('hidden');
-    loopy();
-
-    function loopy(){
-        var ttMultiple = document.getElementById('multipleValue').value;
-        var ttUpperLimit = document.getElementById('upperValue').value;
-        if (checkTTValues(ttMultiple, ttUpperLimit) == true) {
-            document.getElementById('ttMultiple').innerHTML = ttMultiple;
-            document.getElementById('ttUpperMultiple').innerHTML = ttUpperLimit;
-        }
-        else{
-            setTimeout(loopy, 1000);   
-                   }
-                }
-            }
-        }
-            
         
 
 function hideTimesTableModal() {
