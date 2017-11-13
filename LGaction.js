@@ -1,3 +1,14 @@
+function hideSettingsDivs(){
+    var radioStyle = $("input[name='problemStyle']:checked").val();
+    if (radioStyle == "TimesTable") {
+        document.getElementById('NumberSizeDiv').classList.add('hidden');
+        document.getElementById('TypeOfProblemDiv').classList.add('hidden');
+    }
+    else {
+        document.getElementById('NumberSizeDiv').classList.remove('hidden');
+        document.getElementById('TypeOfProblemDiv').classList.remove('hidden');
+    }
+}
 
 //This function is the outermost function.
 function PlayMathGame(){
