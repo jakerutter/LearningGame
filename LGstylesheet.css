@@ -7,14 +7,6 @@ body {
     text-align: center;
   }
 
-/* .simplemodal-wrap {
-    min-height: 100%;
-}
-
-.simplemodal-container {
-    min-height: 100%;
-} */
-
 .lane {
     display: inline-block;
     vertical-align: top;
@@ -28,13 +20,13 @@ body {
 
 #gameWrapper{
     display: inline-block;
-    width: 50em;
+    /* width: 50em; */
     margin: auto;
 }
 
 .row {
   display: inline-block;
-  width: 50em;
+  /* width: 50em; */
   height: 10em;
 }
 
@@ -156,7 +148,15 @@ body {
 }
 
 .textBox {
-    width: 25px;
+    margin-bottom: 5px;
+    width: 40px;
+    border-radius: 4px;
+    background-color: white;
+    color: darkgreen;
+}
+
+input[type=text]:focus {
+    border: 3px solid #555;
 }
 
 .table {
@@ -224,27 +224,67 @@ body {
     margin-right: 20px;
     font-size: 18px;
 }
-
-/* .bodyBackgroundGood {
-    background-color: white;
-    background: -webkit-linear-gradient(45deg, white, green);
-    background: -moz-linear-gradient(45deg, white, green);
-    background: -ms-linear-gradient(45deg, white, green);
-    background: linear-gradient(45deg, white, green);
+.grid {
+    width: 100%;
 }
-
-.bodyBackgroundFair {
-    background-color: white;
-    background: -webkit-linear-gradient(bottom, white, white);
-    background: -moz-linear-gradient(bottom, white, white);
-    background: -ms-linear-gradient(bottom, white, white);
-    background: linear-gradient(bottom, white, white);
+[class*='col-'] {
+    float: left;
+  }
+  .col-2-3 {
+    width: 66.66%;
+  }
+  .col-1-3 {
+    width: 33.33%;
+  }
+  .col-1-2 {
+      width: 50%;
+  }
+  .col-1-4 {
+      width: 25%;
+  }
+  .col-3-4 {
+      width: 75%;
+  }
+  .col-1-8 {
+      width: 12.5%;
+  }
+  .col-7-8 {
+      width: 87.5%
+  }
+  .col-1-1 {
+      width: 100%;
+  }
+  .col-4-10 {
+      width: 40%;
+  }
+  .col-3-10 {
+      width: 30%;
+  }
+  .grid:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  *, *:after, *:before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  /* [class*='col-'] {
+    padding-right: 20px;
+  } */
+  [class*='col-']:last-of-type {
+    padding-right: 0;
+  }
+  .above30Seconds{
+    color: green;
+  }
+.above15Seconds{
+    color: rgb(255, 217, 0);
 }
-
-.bodyBackgroundPoor {
-    background-color: white;
-    background: -webkit-linear-gradient(305deg, white, red);
-    background: -moz-linear-gradient(305deg, white, red);
-    background: -ms-linear-gradient(305deg, white, red);
-    background: linear-gradient(305deg, white, red);
-} */
+.below15Seconds{
+    color: red;
+}
+#standingHighScore{
+    font-size: 1.5em;
+}

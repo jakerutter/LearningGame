@@ -1,9 +1,22 @@
+function setStorage(key,info) {
+    localStorage.setItem(key, JSON.stringify(info));
+}
+
+function getStorage(key) {
+    var item = localStorage.getItem(key);
+    return JSON.parse(item);
+}
+
 function hideSettingsDivs(){
     var radioStyle = $("input[name='problemStyle']:checked").val();
     if (radioStyle == "TimesTable") {
         document.getElementById('NumberSizeDiv').classList.add('hidden');
         document.getElementById('TypeOfProblemDiv').classList.add('hidden');
     }
+    // else if (radioStyle == "Race") {
+    //     document.getElementById('NumberSizeDiv').classList.add('hidden');
+    //     document.getElementById('TypeOfProblemDiv').classList.add('hidden');
+    // }
     else {
         document.getElementById('NumberSizeDiv').classList.remove('hidden');
         document.getElementById('TypeOfProblemDiv').classList.remove('hidden');
@@ -25,7 +38,6 @@ function PlayMathGame(){
             var currentScore = document.getElementById('correctCounter').value;
         }
         
-        // problemObj = new createMathProblem(0,0,"","",0,"");
         var problemObj = new createProblemObj(0,0,"","",0,"");
 
         createMathProblem(problemObj);
@@ -62,17 +74,39 @@ function PlayMathGame(){
     }else{ return;
     }};
 
-//functions
+
 function preGame() {
-    document.getElementById('welcomeModal').classList.remove('hidden');
-    $("#welcomeModal").modal();
+    var radioStyle = $("input[name='problemStyle']:checked").val();
+    var raceModeSet = $("input[name='raceMode']:checked").val();
+    //raceMode will set a different goal
+    if (raceModeSet == "Race") {
+        var standingHighScore = getStorage("oneMinuteRecord");
+        if (standingHighScore == null) {
+            standingHighScore = 0;
+            setStorage("oneMinuteRecord", 0);
         }
+        document.getElementById("standingHighScore").innerHTML = " "+ standingHighScore;
+        document.getElementById('raceModeModal').classList.remove('hidden');
+        $("#raceModeModal").modal();
+    } else {
+        //all cases except raceMode     
+        document.getElementById('welcomeModal').classList.remove('hidden');
+        $("#welcomeModal").modal();
+        }
+   
+    }
 
 function setGoal() {
+    //handle raceMode first
+    var raceModeSet = $("input[name='raceMode']:checked").val();
     var goal;
+    if (raceModeSet == "Race") {
+        goal = document.getElementById("rmGoalValue").innerHTML;
+    }
     goal = $("input[name='goalValue']:checked").val();
     currentGoal.innerHTML = goal;
     }
+
 function hideWelcomeModal(name) {
     if (currentGoal.innerHTML != ""){
     document.getElementById('welcomeModal').classList.add('hidden');
@@ -90,10 +124,7 @@ function preTTGame(){
     }else{
     document.getElementById("timesTableModal").classList.remove("hidden");
     $("#timesTablesModal").modal();
-    // document.getElementById('simplemodal-overlay').classList.add('behind');
-    // document.getElementById('simplemodal-container').classList.add('behind');
-    // document.getElementById('simplemodal-overlay').classList.add('hidden');
-    // document.getElementById('simplemodal-container').classList.add('hidden');
+   
     loopy();
 
     function loopy(){
@@ -240,7 +271,8 @@ function createMathProblem(problemObj) {
                      
                     problemObj.variable = variable;
                 }
-        }   else {
+             } else {
+            //this is for times tables
             var multiple = document.getElementById('ttMultiple').innerHTML;
             var upperLimit = document.getElementById('ttUpperMultiple').innerHTML;
             getTimesTableProblem(problemObj, multiple, upperLimit);
@@ -471,6 +503,16 @@ function compareSelection(problemObj, selection){
     }
 
     if (selectedAnswer == problemObj.correctAnswer){
+        //set "allTimeScore" in local storage
+        var allTimeScore = getStorage("allTimeCorrect");
+        if (allTimeScore == "") {
+            allTimeScore = 0;
+        } else {
+            allTimeScore = parseInt(allTimeScore);
+        }
+        allTimeScore += 1;
+        setStorage("allTimeCorrect", allTimeScore);
+        document.getElementById("allTimeCorrect").innerHTML = allTimeScore;
         document.getElementById("labelResults").innerHTML = "You are correct!";
         correctCount += 1;
         document.getElementById("correctCounter").innerHTML = correctCount.toString();
@@ -590,20 +632,54 @@ function checkTTValues(ttMultiple, ttUpperLimit) {
     else {
         return false;
         }
-    }
+}
 
+function hideRaceModeModal() {
+
+    var rmValue = document.getElementById('rmValue').value;
+
+    if (checkRMValue(rmValue) == true) {
+    
+    document.getElementById('currentGoal').innerHTML = rmValue;
+    document.getElementById("rmGoalValue").innerHTML = rmValue;
+   
+     document.getElementById('simplemodal-overlay').classList.add('behind');
+     document.getElementById('simplemodal-container').classList.add('behind');
+     document.getElementById('simplemodal-overlay').classList.add('hidden');
+     document.getElementById('simplemodal-container').classList.add('hidden');
+
+    startRaceTimer();
+        } else {
+            document.getElementById('rmAlert').innerHTML = "Please Enter Only Whole Numbers";
+        }
+        PlayMathGame();
+    }
+function checkRMValue(rmValue) {
+    rmValue = rmValue.trim();
+    if (rmValue != "") {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 
 function goalMet(globalCorrect, currentGoal, percentCorrect, questionsAnswered){
+    var raceModeSet = $("input[name='raceMode']:checked").val();
     if (currentGoal != "None"){
+        if (raceModeSet != "Race") {
         var questionsAnswered = document.getElementById('questionsAnswered').innerHTML;
             if (questionsAnswered >= currentGoal) {
                 var status =  percentCorrect >= 75 ? "passed" : "failed";
                 getFinishedSound(status)
-                showFinishedModal(globalCorrect, currentGoal, percentCorrect);
-                }
-            }
+                showFinishedModal(globalCorrect, currentGoal, percentCorrect); 
+                    }
+                } else {
+                    //this is for raceMode
+
         }
+    }
+}
 
 function showFinishedModal(globalCorrect, currentGoal, percentCorrect){
 
@@ -629,7 +705,8 @@ function showFinishedModal(globalCorrect, currentGoal, percentCorrect){
     document.getElementById('EndMessageGoalSet').innerHTML = ("The goal you set was "+ currentGoal + ".");
     document.getElementById('EndMessageTotalAnswered').innerHTML = ("You answered "+ globalCorrect + " correct out of " + questionsAnswered + " attempted.");
     document.getElementById('EndMessagePercentCorrect').innerHTML = ("You finished with "+ percentCorrect.toFixed(2) + "% correct.");
-    }
+
+}
 
 function hideFinishedModal(){
     if (currentGoal.innerHTML != ""){
@@ -638,29 +715,61 @@ function hideFinishedModal(){
         document.getElementById('simplemodal-overlay').classList.add('behind');
         document.getElementById('simplemodal-container').classList.add('behind');
         window.location.reload(true);
-        }
     }
+}
 
 function hideFinishedShowReview() {
+    var raceModeSet = $("input[name='raceMode']:checked").val();
+    var reviewArray = "";
     if (currentGoal.innerHTML != ""){
+        if (raceModeSet != "Race") {
         document.getElementById('finishedModal').classList.add('hidden');
         document.getElementById('finishedModal').classList.add('behind');
 
         $("#reviewModal").modal();
         document.getElementById('reviewModal').classList.remove('hidden');
         document.getElementById('reviewModal').classList.add('table');
-        var reviewArray = document.getElementById('listWrongAnswers').innerHTML.split(",");
+        reviewArray = document.getElementById('listWrongAnswers').innerHTML.split(",");
         for(i=0; i < reviewArray.length-1; i+=2){
             reviewProblemsLeft.innerHTML += "<li>" + reviewArray[i] + "</li>";
         }
         for(i=1; i < reviewArray.length-1; i+=2){
             reviewProblemsRight.innerHTML += "<li>" + reviewArray[i] + "</li>";
             }
+        } else {
+            //this is for race mode
+            var highScore = getStorage("oneMinuteRecord");
+            var numCorrect = document.getElementById("totalCorrect").innerHTML;
+            document.getElementById('finishedModal').classList.add('hidden');
+            document.getElementById('finishedModal').classList.add('behind');
+            $("#raceReviewModal").modal();
+            document.getElementById('raceReviewModal').classList.remove('hidden');
+            document.getElementById('raceReviewModal').classList.add('table');
+            document.getElementById("raceReviewModalHeader").innerHTML = "In 1 minute you got " +numCorrect+ " correct!";
+            //if set the new high score --
+            document.getElementById("raceModeHighScoreInfo").innerHTML =  "The 1 minute record is "+highScore +".";
+            if (numCorrect >= highScore) {
+                document.getElementById("raceModeHighScoreInfo").innerHTML += " You set the new high score!!";
+            } else {
+                document.getElementById("raceModeHighScoreInfo").innerHTML += " You did not reach the record.";
+            }
+            reviewArray = document.getElementById('listWrongAnswers').innerHTML.split(",");
+            if (reviewArray != "") {
+                document.getElementById("missedRaceProblems").classList.remove("hidden");
+            for(i=0; i < reviewArray.length-1; i+=2){
+                raceReviewProblemsLeft.innerHTML += "<li>" + reviewArray[i] + "</li>";
+            }
+            for(i=1; i < reviewArray.length-1; i+=2){
+                raceReviewProblemsRight.innerHTML += "<li>" + reviewArray[i] + "</li>";
+                }
+            }
         }
     }
+}
 
 function changeStyling(percentCorrect, questionsAnswered) {
-
+    var raceModeSet = $("input[name='raceMode']:checked").val();
+    if (raceModeSet != "Race") {
     if (percentCorrect >= 85){
         if (document.getElementById('percentCorrect').classList.contains('doingPoor')) {
             document.getElementById('percentCorrect').classList.remove('doingPoor');
@@ -689,6 +798,7 @@ function changeStyling(percentCorrect, questionsAnswered) {
             document.getElementById('percentCorrect').classList.add('doingPoor');
         }
     }
+}
 
 //function will retrieve appropriate sound when game is completed.
 function getFinishedSound(status) {
@@ -731,7 +841,8 @@ function getAnsweredSound(isCorrect) {
 //Function will take the currentGoal and questionsAnswered values as parameters and 
 //use these values to update and style a progression chart displayed on the page.
 function trackProgress(currentGoal, questionsAnswered) {
-    
+    var raceModeSet = $("input[name='raceMode']:checked").val();
+    if (raceModeSet != "Race") {
     var status = currentStatus();
 
     if (currentGoal != "None") {
@@ -759,6 +870,7 @@ function trackProgress(currentGoal, questionsAnswered) {
             $('#percentCorrect').removeClass("doingFair");
             $('#percentCorrect').addClass("doingPoor");
             document.body.style.background = "-webkit-linear-gradient(bottom, "+ bodyColor+ " "+progress +"%, white 100%)";
+                }
             }
         }
     }
@@ -942,4 +1054,38 @@ function getRandomInt(min, max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
     }
+
+function startRaceTimer() {
+    document.getElementById("raceGameTimer").classList.remove("hidden");
+    // var countDownDate = new Date().getTime();
+    var countDownDate = 60;
+    // Update the count down every 1 second
+    var x = setInterval(function() {
+
+        var distance = countDownDate -= 1;
+        // If the count down is over, write some text and end the round
+        document.getElementById("raceGameTimer").innerHTML = distance;
+        if (distance < 30) {
+            document.getElementById("raceGameTimer").classList.remove("above30Seconds");
+            document.getElementById("raceGameTimer").classList.add("above15Seconds");
+        } if (distance < 15) {
+            document.getElementById("raceGameTimer").classList.remove("above15Seconds");
+            document.getElementById("raceGameTimer").classList.add("below15Seconds");
+        } if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("raceGameTimer").classList.remove("below15Seconds");
+            document.getElementById("raceGameTimer").innerHTML = "EXPIRED";
+            //get the old high score from local storage - compare it with this high score and show a results modal
+            var correct = document.getElementById("totalCorrect").innerHTML;
+            var standingHighScore = parseInt(getStorage("oneMinuteRecord"));
+            if (parseInt(correct) > standingHighScore) {
+                setStorage("oneMinuteRecord", correct);
+            }
+            //skipping showFinishModal in order to show the data that relates to raceMode more specifically
+            hideFinishedShowReview();
+        }
+    }, 1000);
+
+   
+}
         

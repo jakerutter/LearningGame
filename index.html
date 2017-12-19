@@ -11,20 +11,23 @@
     <div id="labelResults" class="miniRow"></div>
     <div id="correctCounterLabel" class="miniRow"></div>
 
-<div id="wholeWrapper">
-<div id="leftLane" class="lane">
+<div id="wholeWrapper" class="grid">
+<div id="leftLane" class="lane col-1-4">
     <div class="statWrapper">
         <h2 class="statTitle">Game Settings</h2>
 
-        <div class="statPlaceholderText">Standard Math Problems, Simple Equations, or Times Tables?
+        <div class="statPlaceholderText">Math style
+            <form action="" class="radioButton">
+                <input type="radio" name="raceMode" value="Race">1 Minute Quiz<br><br><br>                    
+            </form>
             <form action="" class="radioButton">
                 <input type="radio" name="problemStyle" value="Answer" checked="checked" onclick="hideSettingsDivs()">Standard Math Problem<br>
                 <input type="radio" name="problemStyle" value="Number" onclick="hideSettingsDivs()">Simple Equation<br>
                 <input type="radio" name="problemStyle" value="TimesTable" onclick="hideSettingsDivs()">Times Tables<br>
-              </form>
+            </form>
         </div>
 
-        <div id="NumberSizeDiv" class="statPlaceholderText">How large do you want the numbers?
+        <div id="NumberSizeDiv" class="statPlaceholderText">Number size
             <form action="" class="radioButton">
                 <input type="radio" name="problemSize" value="10" checked="checked" > 10 and Smaller<br>
                 <input type="radio" name="problemSize" value="20" > 20 and Smaller<br>
@@ -32,7 +35,7 @@
               </form>
         </div>
 
-        <div id="TypeOfProblemDiv" class="statPlaceholderText">What type of math problems?
+        <div id="TypeOfProblemDiv" class="statPlaceholderText">Type of math problems
             <form action="" class="radioButton">
                 <input type="radio" name="problemType" value="addsub" checked="checked"> Addition and Subtraction<br>
                 <input type="radio" name="problemType" value="add"> Addition<br>
@@ -46,27 +49,27 @@
     </div>
 </div>
 
-    <div id="gameWrapper" class="gameWrapper">
-       
-        <div class="row">
+    <div id="gameWrapper" class="gameWrapper col-1-2">
+      
+        <div class="row col-1-1">
             <div id="leftTop" class="cell"></div>
             <button id="Top" class="cell answerOption" ></button>
             <div id="rightTop" class="cell"></div>
         </div>
-        <div class="row">
+        <div class="row col-1-1">
             <button id="Left" class="cell answerOption" ></button>
             <div class="cell question"><button id="questionArea"  class="questionButton" onclick="PlayMathGame()">Click Here to Start</button></div>
             <button id="Right" class="cell answerOption" ></button>
         </div>
-        <div class="row">   
+        <div class="row col-1-1">   
             <div id="leftBottom" class="cell"></div>
             <button id="Bottom" class="cell answerOption" ></button>
             <div id="rightBottom" class="cell"></div>   
         </div>
-
+        <div class="col-1-1"><h1 id="raceGameTimer" class="hidden above30Seconds"></h1></div>
 </div>
 
-<div id="rightLane" class="lane">
+<div id="rightLane" class="lane col-1-4">
     <div class="statWrapper">
         <h2 class="statTitle">Game Stats</h2>
         <div class="statPlaceholderText">Current Goal: </div>
@@ -78,6 +81,8 @@
         <div id="totalCorrect" class="statPlaceholder"></div><br>
         <div class="statPlaceholderText">% Correct:</div>
         <div id="percentCorrect" class="statPlaceholder"></div>
+        <div class="statPlaceholderText">All Time Correct</div>
+        <div id="allTimeCorrect" class="statPlaceholder"></div>
         
     </div>
 </div>
@@ -108,6 +113,17 @@
         <div><h5>Hint: times tables for 5s, with multiple of 5 would allow for 0 * 5 up to 5 * 5.</h5></div>
         <button id="confirmTimesTable" onclick="hideTimesTableModal()">Continue</button>
 </div>
+<div id="raceModeModal" class="modal center hidden"><h1>1 Minute Quiz</h1>
+    <div style="display:inline-block;"><span>Current High Score: </span><div id="standingHighScore"></div></div>
+    <div><h3 id="rmAlert">... ... ... ... ...</h3></div>
+   
+        <form action="" id="textBoxModal2">
+            <input type="text" name="raceGoalValue" class="textBox" id="rmValue"
+                onkeypress="if (isNaN( String.fromCharCode(event.keyCode))) return false;"> Set Goal<br>
+          </form>
+        <div><h5>60 seconds. How many can you get correct?</h5></div>
+        <button id="confirmRaceMode" onclick="hideRaceModeModal()">Continue</button>
+</div>
 
 <div id="finishedModal" class="modal center hidden"><h1>You have finished!</h1>
     <div><h3 id="finishedResult"></h3></div>
@@ -128,6 +144,17 @@
     <br>
 </div>
 
+<div id="raceReviewModal" class="expandingModal center hidden"><h3 id="raceReviewModalHeader"></h3>
+    <h2 id="raceModeHighScoreInfo" class="col-1-1"></h2>
+    <div id="raceReviewContainer">
+    <div id="raceReviewProblemsLeft" class="reviewProblems"></div>
+    <div id="raceReviewProblemsRight" class="reviewProblems"></div>
+    <div id="missedRaceProblems" class="hidden"><h5>Above are the problems you missed.</h5></div>
+    <button id="confirmReviewed" onclick="hideFinishedModal()">End Session</button>
+    </div>
+    <br>
+</div>
+
 <div id="correctCounter" class="hidden">0</div>
 <div id="questionsAnswered" class="hidden">0</div>
 <div id="globalCorrect" class="hidden">0</div>
@@ -135,6 +162,7 @@
 <div id="ttMultiple" class="hidden"></div>
 <div id="ttUpperMultiple" class="hidden"></div>
 <div id="ttCorrectAnswer" class="hidden"></div>
+<div id="rmGoalValue" class="hidden"></div>
 
 <script type="text/javascript" src="jquery-3.1.1.js"></script>
 <script type="text/javascript" src="jquery.simplemodal-1.4.4.js"></script>
