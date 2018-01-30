@@ -505,7 +505,7 @@ function compareSelection(problemObj, selection){
     if (selectedAnswer == problemObj.correctAnswer){
         //set "allTimeScore" in local storage
         var allTimeScore = getStorage("allTimeCorrect");
-        if (allTimeScore == "") {
+        if ((allTimeScore == "") || (allTimeScore == undefined) || (allTimeScore == NaN)) {
             allTimeScore = 0;
         } else {
             allTimeScore = parseInt(allTimeScore);
@@ -513,6 +513,12 @@ function compareSelection(problemObj, selection){
         allTimeScore += 1;
         setStorage("allTimeCorrect", allTimeScore);
         document.getElementById("allTimeCorrect").innerHTML = allTimeScore;
+        //hide all time correct div if NAN is shown
+        if (allTimeScore == "NaN") {
+            document.getElementById('allTimeCorrect').classList.add('hidden');
+        } else {
+            document.getElementById('allTimeCorrect').classList.remove('hidden');
+        }
         document.getElementById("labelResults").innerHTML = "You are correct!";
         correctCount += 1;
         document.getElementById("correctCounter").innerHTML = correctCount.toString();

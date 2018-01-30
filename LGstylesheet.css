@@ -39,7 +39,7 @@ body {
 
 .cell {
   display: inline-block;
-  width: 10em;
+  width: 30%;
   height: 10em;
   text-align: center;
   vertical-align: middle;
