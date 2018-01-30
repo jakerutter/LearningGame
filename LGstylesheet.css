@@ -40,6 +40,7 @@ body {
 .cell {
   display: inline-block;
   width: 30%;
+  max-width: 10em;
   height: 10em;
   text-align: center;
   vertical-align: middle;
