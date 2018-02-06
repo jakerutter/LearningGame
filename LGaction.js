@@ -677,7 +677,8 @@ function goalMet(globalCorrect, currentGoal, percentCorrect, questionsAnswered){
         var questionsAnswered = document.getElementById('questionsAnswered').innerHTML;
             if (questionsAnswered >= currentGoal) {
                 var status =  percentCorrect >= 75 ? "passed" : "failed";
-                getFinishedSound(status)
+                getFinishedSound(status);
+                document.body.style.background = "white";
                 showFinishedModal(globalCorrect, currentGoal, percentCorrect); 
                     }
                 } else {
@@ -1091,7 +1092,15 @@ function startRaceTimer() {
             hideFinishedShowReview();
         }
     }, 1000);
-
-   
 }
-        
+
+function loadLocalStorageValues() {
+    var allTimeCorrect = getStorage("allTimeCorrect");
+    if (allTimeCorrect != "") {
+        if (allTimeCorrect != undefined) {
+            if (allTimeCorrect != NaN) {
+                document.getElementById('allTimeCorrect').innerHTML = allTimeCorrect;
+            }
+        }
+    }
+}

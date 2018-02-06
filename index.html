@@ -4,7 +4,7 @@
 <link rel="stylesheet" type="text/css" href="LGstylesheet.css">
 <title>Learning Game</title>
 </head>
-<body>
+<body onload="loadLocalStorageValues();">
     
 <h1 class="headTitle">Math Learning Game</h1>
 
@@ -58,7 +58,7 @@
         </div>
         <div class="row col-1-1">
             <button id="Left" class="cell answerOption" ></button>
-            <div class="cell question"><button id="questionArea"  class="questionButton" onclick="PlayMathGame()">Click Here to Start</button></div>
+            <div class="cell question"><button id="questionArea"  class="questionButton" onclick="PlayMathGame()">Start</button></div>
             <button id="Right" class="cell answerOption" ></button>
         </div>
         <div class="row col-1-1">   

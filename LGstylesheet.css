@@ -289,3 +289,6 @@ input[type=text]:focus {
 #standingHighScore{
     font-size: 1.5em;
 }
+.whiteOut{
+    background-color: white;
+}
