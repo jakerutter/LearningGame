@@ -14,9 +14,8 @@ https://jakerutter.github.io/LearningGame/
 
 ## Authors
 
-* **Jacob Rutter** - *Initial work* - 
+* **Jacob Rutter** - *All work* - 
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
 
 ## Acknowledgments
